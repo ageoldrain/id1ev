@@ -1,3 +1,4 @@
+
 from otree.api import *
 from otree.models.participant import Participant as oTreeParticipant
 import numpy as np
@@ -9,7 +10,7 @@ Curiosity and Information Demand
 debug = False
 
 class C(BaseConstants):
-    NAME_IN_URL = 'Economics Experiment'
+    NAME_IN_URL = 'Curiosity'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 10
    # NUM_PRACTICE_ROUNDS=2
