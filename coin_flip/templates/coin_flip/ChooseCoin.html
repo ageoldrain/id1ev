@@ -59,6 +59,13 @@ for (i = 0; i < acc.length; i++) {
     <h2 class="text-center my-4">This is round number {{ round_number }}. The outcome of which coin would you like to reveal?
     </h2>
 
+   {% with fair_left=request.session.fair_left biased_left=request.session.biased_left %}
+    {% if fair_left <= biased_left %}
+        {% with coins=("fair", "biased") %}
+    {% else %}
+        {% with coins=("biased", "fair") %}
+    {% endif %}
+
     <form method="post">
         <div class="d-flex justify-content-center mb-3">
             <div class="btn-group-toggle" data-toggle="buttons">
