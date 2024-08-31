@@ -36,6 +36,24 @@
 </style>
 
 
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+</script>
+
+
 
 <div class="container">
     <h2 class="text-center my-4">This is round number {{ round_number }}. The outcome of which coin would you like to reveal?
