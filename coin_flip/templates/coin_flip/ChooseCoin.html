@@ -3,7 +3,11 @@
 {% load otree %}
 
 
-<head>
+
+
+
+{% block content %}
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 .accordion {
@@ -30,11 +34,9 @@
   overflow: hidden;
 }
 </style>
-</head>
-<body>
 
 
-{% block content %}
+
 <div class="container">
     <h2 class="text-center my-4">This is round number {{ round_number }}. The outcome of which coin would you like to reveal?
     </h2>
@@ -90,9 +92,10 @@
 
 
 </div>
+     </script>
 {% endblock %}
 
-    </script>
+ 
 
 </body>
 
