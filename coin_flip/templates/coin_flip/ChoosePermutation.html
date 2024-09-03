@@ -69,9 +69,14 @@ for (i = 0; i < acc.length; i++) {
                 {{ form.coin_permutation_choice.errors }}
             </div>
         {% endif %}
+      
+        <div class="d-flex justify-content-center">
+            {% next_button %}
+        </div>
+    </form>
+</div>
 
-
-       <button class="accordion">View Instructions</button>
+       <button class="accordion">Review Instructions</button>
 <div class="panel">
   <p>
         The experiment proceeds in rounds. In each round, two coins will be flipped - a fair one (with equal probabilities of landing heads or tails), which we will call coin 1, and a biased one (with a high chance of landing heads), which we will call coin 2. You will <b>not</b> be informed of their outcomes automatically.
@@ -93,9 +98,5 @@ for (i = 0; i < acc.length; i++) {
         </p>
 </div>
         
-        <div class="d-flex justify-content-center">
-            {% next_button %}
-        </div>
-    </form>
-</div>
+
 {% endblock %}
