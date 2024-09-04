@@ -60,29 +60,16 @@ for (i = 0; i < acc.length; i++) {
     <form method="post">
         <div class="d-flex justify-content-center mb-3">
             <div class="btn-group-toggle" data-toggle="buttons">
-                {% if coin_order == 'fair-left' %}
-                    <label class="btn btn-primary mx-2 coin-label">
-                        <input type="radio" name="{{ form.coin_choice.name }}" value="fair" class="coin-input" required>
-                        <img src="https://github.com/ageoldrain/infodemand1/blob/main/coin_flip/templates/coin_flip/CoinImage.png?raw=true" alt="Fair" class="coin-image">
-                        <div>Fair</div>
-                    </label>
-                    <label class="btn btn-primary mx-2 coin-label">
-                        <input type="radio" name="{{ form.coin_choice.name }}" value="biased" class="coin-input" required>
-                        <img src="https://github.com/ageoldrain/infodemand1/blob/main/coin_flip/templates/coin_flip/CoinImage.png?raw=true" alt="Biased" class="coin-image">
-                        <div>Biased</div>
-                    </label>
-                {% else %}
-                    <label class="btn btn-primary mx-2 coin-label">
-                        <input type="radio" name="{{ form.coin_choice.name }}" value="biased" class="coin-input" required>
-                        <img src="https://github.com/ageoldrain/infodemand1/blob/main/coin_flip/templates/coin_flip/CoinImage.png?raw=true" alt="Biased" class="coin-image">
-                        <div>Biased</div>
-                    </label>
-                    <label class="btn btn-primary mx-2 coin-label">
-                        <input type="radio" name="{{ form.coin_choice.name }}" value="fair" class="coin-input" required>
-                        <img src="https://github.com/ageoldrain/infodemand1/blob/main/coin_flip/templates/coin_flip/CoinImage.png?raw=true" alt="Fair" class="coin-image">
-                        <div>Fair</div>
-                    </label>
-                {% endif %}
+                <label class="btn btn-primary mx-2 coin-label">
+                    <input type="radio" name="{{ form.coin_choice.name }}" value="fair" class="coin-input" required>
+                    <img src="https://github.com/ageoldrain/infodemand1/blob/main/coin_flip/templates/coin_flip/CoinImage.png?raw=true" alt="Fair" class="coin-image">
+                    <div>Fair</div>
+                </label>
+                <label class="btn btn-primary mx-2 coin-label">
+                    <input type="radio" name="{{ form.coin_choice.name }}" value="biased" class="coin-input" required>
+                    <img src="https://github.com/ageoldrain/infodemand1/blob/main/coin_flip/templates/coin_flip/CoinImage.png?raw=true" alt="Biased" class="coin-image">
+                    <div>Biased</div>
+                </label>
             </div>
         </div>
 
@@ -96,7 +83,7 @@ for (i = 0; i < acc.length; i++) {
             {% next_button %}
         </div>
     </form>
-</div>
+
 
 <!-- Review Instructions Section -->
 <div class="accordion">Review Instructions</div>
