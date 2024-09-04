@@ -3,6 +3,9 @@ from otree.api import *
 from otree.models.participant import Participant as oTreeParticipant
 import numpy as np
 
+import random
+from otree.api import Page
+
 doc = """
 Curiosity and Information Demand
 """
@@ -82,3 +85,15 @@ class Group(BaseGroup):
 
 class Subsession(BaseSubsession):
     pass
+
+
+class CoinChoicePage(Page):
+    form_model = 'player'
+    form_fields = ['coin_choice']
+
+    def vars_for_template(self):
+        # Randomly choose whether the fair coin will be on the left or right
+        coin_order = random.choice(['fair-left', 'fair-right'])
+        return {
+            'coin_order': coin_order,
+        }
