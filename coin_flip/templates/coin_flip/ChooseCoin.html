@@ -76,8 +76,14 @@
         });
     });
 
-{% endblock %}
+    document.querySelector('a.btn-info').addEventListener('click', (event) => {
+        // Prevent the default action if the form is valid
+        if (document.querySelector('form').checkValidity()) {
+            event.preventDefault();
+        }
+    });
 </script>
+
 
 {% endwith %}
 {% endblock %}
