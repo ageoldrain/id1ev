@@ -1,5 +1,6 @@
 from otree.api import Page, WaitPage
 from .models import C
+import random  # Import random for shuffling
 
 class CoinFlipPage(Page):
     def vars_for_template(self):
@@ -47,28 +48,31 @@ class RoundInfo(Page):
         return self.round_number <= C.NUM_ROUNDS
 
 
+
 class ChooseCoin(Page):
-    """
-    Page where participant chooses between 'fair' and 'biased' coin.
-    """
     form_model = 'player'
     form_fields = ['coin_choice']
 
-  #  return {
-  #          'round_number': self.round_number
-  #      }
-
     def vars_for_template(self):
+        # Define the two coins
+        coins = ['fair', 'biased']
+        
+        # Shuffle the coins to randomize their order
+        random.shuffle(coins)
+        
+        # Pass the randomized order of coins and round number to the template
         return {
-            'round_number': self.round_number
+            'round_number': self.round_number,
+            'coins': coins
         }
 
     def is_displayed(self):
         return self.round_number <= C.NUM_ROUNDS
 
     def before_next_page(self):
-        # Flip the chosen coin after the player makes a choice.
+        # Flip the chosen coin after the player makes a choice
         self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
+
 
 
 class RevealCoinOutcome(Page):
