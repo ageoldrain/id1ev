@@ -2,7 +2,7 @@ from otree.api import Page, WaitPage
 from .models import C
 import random  # Import random for shuffling
 
-class CoinFlipPage(Page):
+class ChooseCoin(Page):
     def vars_for_template(self):
         coins = ['fair', 'biased']
         random.shuffle(coins)
@@ -120,4 +120,4 @@ class Results(Page):
     def is_displayed(self):
         return self.round_number == C.NUM_ROUNDS
 
-page_sequence = [Introduction, Introduction1point5, Introduction2, CoinFlipPage, ChooseCoin, RevealCoinOutcome, ChoosePermutation, Results]
+page_sequence = [Introduction, Introduction1point5, Introduction2, ChooseCoin, RevealCoinOutcome, ChoosePermutation, Results]
