@@ -57,11 +57,12 @@ class ChooseCoin(Page):
     form_fields = ['coin_choice']
 
     def vars_for_template(self):
-        # Define and shuffle the two coins, capitalize in Python
-        coins = ['Fair', 'Biased']  # Capitalized here
-        
+        # Ensure the coins are lowercase to match the valid choices
+        coins = ['fair', 'biased']  # Already lowercase to match the model
+
+        # Shuffle the order of the coins
         random.shuffle(coins)
-        
+
         return {
             'coins': coins,
             'fair_left': self.session.vars.get('fair_left', 0),
@@ -75,6 +76,7 @@ class ChooseCoin(Page):
     def before_next_page(self):
         # Flip the chosen coin after the player makes a choice
         self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
+
 
 class RevealCoinOutcome(Page):
     """
