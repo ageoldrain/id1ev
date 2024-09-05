@@ -2,6 +2,25 @@ from otree.api import *
 from otree.models.participant import Participant as oTreeParticipant
 import numpy as np
 
+
+import random
+
+class YourPage(Page):
+    def vars_for_template(self):
+        # Define the two coins
+        coins = ['fair', 'biased']
+        
+        # Shuffle the order of the coins
+        random.shuffle(coins)
+        
+        # Pass the randomized order to the template
+        return {
+            'coins': coins,
+            'fair_left': self.session.vars['fair_left'],
+            'biased_left': self.session.vars['biased_left'],
+        }
+
+
 doc = """
 Curiosity and Information Demand
 """
