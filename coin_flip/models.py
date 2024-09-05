@@ -10,19 +10,18 @@ class ChooseCoin(Page):
     form_fields = ['coin_choice']
 
     def vars_for_template(self):
-        # Define the two coins
-        coins = ['fair', 'biased']
-        
-        # Shuffle the order of the coins
+        # Define and shuffle the two coins
+        coins = ['Fair', 'Biased']  # Capitalize here
+
         random.shuffle(coins)
         
-        # Pass the randomized order to the template, and ensure session variables are handled correctly
         return {
             'coins': coins,
-            'fair_left': self.session.vars.get('fair_left', 0),  # Default to 0 if not set
-            'biased_left': self.session.vars.get('biased_left', 0),  # Default to 0 if not set
+            'fair_left': self.session.vars.get('fair_left', 0),
+            'biased_left': self.session.vars.get('biased_left', 0),
             'round_number': self.round_number
         }
+
 
     def is_displayed(self):
         return self.round_number <= C.NUM_ROUNDS
