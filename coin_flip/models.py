@@ -99,4 +99,10 @@ class Group(BaseGroup):
     pass
 
 class Subsession(BaseSubsession):
-    pass
+    def creating_session(self):
+        for player in self.get_players():
+            if 'fair_left' not in self.session.vars:
+                self.session.vars['fair_left'] = 0  # Or some default value
+            if 'biased_left' not in self.session.vars:
+                self.session.vars['biased_left'] = 0  # Or some default value
+
