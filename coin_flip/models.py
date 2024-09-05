@@ -5,7 +5,10 @@ import numpy as np
 
 import random
 
-class YourPage(Page):
+class ChooseCoin(Page):
+    form_model = 'player'
+    form_fields = ['coin_choice']
+
     def vars_for_template(self):
         # Define the two coins
         coins = ['fair', 'biased']
@@ -13,12 +16,20 @@ class YourPage(Page):
         # Shuffle the order of the coins
         random.shuffle(coins)
         
-        # Pass the randomized order to the template
+        # Pass the randomized order to the template, and ensure session variables are handled correctly
         return {
             'coins': coins,
-            'fair_left': self.session.vars['fair_left'],
-            'biased_left': self.session.vars['biased_left'],
+            'fair_left': self.session.vars.get('fair_left', 0),  # Default to 0 if not set
+            'biased_left': self.session.vars.get('biased_left', 0),  # Default to 0 if not set
+            'round_number': self.round_number
         }
+
+    def is_displayed(self):
+        return self.round_number <= C.NUM_ROUNDS
+
+    def before_next_page(self):
+        # Flip the chosen coin after the player makes a choice
+        self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
 
 
 doc = """
