@@ -15,8 +15,6 @@
                     <div>{{ coins.0 }}</div> <!-- No filter needed -->
                 </label>
 
-                 {{ formfield_errors 'coin_choice' }}
-
                 <!-- Second Coin -->
                 <label class="btn btn-primary mx-2 coin-label">
                     <input type="radio" name="{{ form.coin_choice.name }}" value="{{ coins.1 }}" class="coin-input" required>
@@ -31,8 +29,6 @@
                 {{ form.coin_choice.errors }}
             </div>
         {% endif %}
-
-        
 
         <div class="d-flex justify-content-center">
             {% next_button %}
@@ -60,7 +56,6 @@
         </p>
     </div>
 
-
 <style>
     .coin-label {
         cursor: pointer;
@@ -80,6 +75,30 @@
         max-width: 200px;
         transition: border 0.2s, transform 0.2s;
     }
+
+    .accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+    .active, .accordion:hover {
+        background-color: #ccc;
+    }
+
+    .panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
 </style>
 
 <script>
@@ -91,6 +110,20 @@
             label.classList.add('active');
         });
     });
+
+    // Accordion functionality for instructions
+    var acc = document.getElementsByClassName("accordion");
+    for (var i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        });
+    }
 </script>
 
 {% endblock %}
