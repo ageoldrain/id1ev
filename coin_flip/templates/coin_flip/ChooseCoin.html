@@ -6,21 +6,17 @@
     <h2 class="text-center my-4">This is round number {{ round_number }}. The outcome of which coin would you like to reveal?
     </h2>
 
-    {% with fair_left=request.session.fair_left biased_left=request.session.biased_left %}
-    {% if fair_left <= biased_left %}
-        {% with coins=("fair", "biased") %}
-    {% else %}
-        {% with coins=("biased", "fair") %}
-    {% endif %}
-
- <form method="post">
+    <form method="post">
         <div class="d-flex justify-content-center mb-3">
             <div class="btn-group-toggle" data-toggle="buttons">
+                <!-- First Coin -->
                 <label class="btn btn-primary mx-2 coin-label">
                     <input type="radio" name="{{ form.coin_choice.name }}" value="{{ coins.0 }}" class="coin-input" required>
                     <img src="https://github.com/ageoldrain/infodemand1/blob/main/coin_flip/templates/coin_flip/CoinImage.png?raw=true" alt="{{ coins.0 }}" class="coin-image">
                     <div>{{ coins.0|title }}</div>
                 </label>
+                
+                <!-- Second Coin -->
                 <label class="btn btn-primary mx-2 coin-label">
                     <input type="radio" name="{{ form.coin_choice.name }}" value="{{ coins.1 }}" class="coin-input" required>
                     <img src="https://github.com/ageoldrain/infodemand1/blob/main/coin_flip/templates/coin_flip/CoinImage.png?raw=true" alt="{{ coins.1 }}" class="coin-image">
@@ -33,7 +29,7 @@
             <div class="alert alert-danger text-center">
                 {{ form.coin_choice.errors }}
             </div>
-        {% endif %}  
+        {% endif %}
 
         <div class="d-flex justify-content-center">
             {% next_button %}
@@ -75,36 +71,6 @@
             label.classList.add('active');
         });
     });
-
-    document.querySelector('a.btn-info').addEventListener('click', (event) => {
-        // Prevent the default action if the form is valid
-        if (document.querySelector('form').checkValidity()) {
-            event.preventDefault();
-        }
-    });
 </script>
 
-<script>
-    // Add a flag to track if the form was interacted with
-    let formInteracted = false;
-
-    // Track form interaction
-    document.querySelectorAll('.coin-input').forEach(input => {
-        input.addEventListener('change', () => {
-            formInteracted = true;
-        });
-    });
-
-    // Prevent default action for instructions if form is interacted with
-    document.querySelector('a.btn-info').addEventListener('click', (event) => {
-        if (formInteracted) {
-            event.preventDefault();
-            alert('Please complete or reset your selection before viewing instructions.');
-        }
-    });
-</script>
-
-
-
-{% endwith %}
 {% endblock %}
