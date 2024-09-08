@@ -1,6 +1,36 @@
+
 from otree.api import *
 from otree.models.participant import Participant as oTreeParticipant
 import numpy as np
+
+
+import random
+
+class ChooseCoin(Page):
+    form_model = 'player'
+    form_fields = ['coin_choice']
+
+    def vars_for_template(self):
+        # Define and shuffle the two coins
+        coins = ['Fair', 'Biased']  # Capitalize here
+
+        random.shuffle(coins)
+        
+        return {
+            'coins': coins,
+            'fair_left': self.session.vars.get('fair_left', 0),
+            'biased_left': self.session.vars.get('biased_left', 0),
+            'round_number': self.round_number
+        }
+
+
+    def is_displayed(self):
+        return self.round_number <= C.NUM_ROUNDS
+
+    def before_next_page(self):
+        # Flip the chosen coin after the player makes a choice
+        self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
+
 
 doc = """
 Curiosity and Information Demand
@@ -9,7 +39,7 @@ Curiosity and Information Demand
 debug = False
 
 class C(BaseConstants):
-    NAME_IN_URL = 'Economics Experiment'
+    NAME_IN_URL = 'economics_experiment'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 10
    # NUM_PRACTICE_ROUNDS=2
@@ -80,4 +110,9 @@ class Group(BaseGroup):
     pass
 
 class Subsession(BaseSubsession):
-    pass
+    def creating_session(self):
+        for player in self.get_players():
+            if 'fair_left' not in self.session.vars:
+                self.session.vars['fair_left'] = 0  # Or some default value
+            if 'biased_left' not in self.session.vars:
+                self.session.vars['biased_left'] = 0  # Or some default value
