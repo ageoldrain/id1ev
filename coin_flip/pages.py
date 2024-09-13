@@ -1,13 +1,9 @@
-
 from otree.api import Page, WaitPage
 from .models import C
 import random  # Import random for shuffling
 
-
-
-
 P_FAIR = 0.5
-P_BIASED = 0.9 # The probability of heads of the biased coin
+P_BIASED = 0.95  # The probability of heads of the biased coin
 
 class Introduction(Page):
     """
@@ -30,28 +26,17 @@ class Introduction2(Page):
     def is_displayed(self):
         return self.round_number == 1
 
-
 class RoundInfo(Page):
     """
     Page displaying round information
     """
-    
     def vars_for_template(self):
         return {
             'round_number': self.round_number
         }
+    
     def is_displayed(self):
         return self.round_number <= C.NUM_ROUNDS
-
-
-
-
-    def is_displayed(self):
-        return self.round_number <= C.NUM_ROUNDS
-
-    def before_next_page(self):
-        # Flip the chosen coin after the player makes a choice
-        self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
 
 class ChooseCoin(Page):
     form_model = 'player'
@@ -78,14 +63,14 @@ class ChooseCoin(Page):
         # Flip the chosen coin after the player makes a choice
         self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
 
-
 class RevealCoinOutcome(Page):
     """
     Page revealing the outcome of the chosen coin.
     """
     def vars_for_template(self):
         return {
-            'chosen_coin_result': self.player.chosen_coin_result, 'round_number': self.round_number
+            'chosen_coin_result': self.player.chosen_coin_result, 
+            'round_number': self.round_number
         }
     
     def is_displayed(self):
@@ -93,14 +78,14 @@ class RevealCoinOutcome(Page):
 
 class ChoosePermutation(Page):
     """
-    Page where participant chooses between four options.
+    Page where participant guesses the outcome of both coins individually.
     """
     form_model = 'player'
-    form_fields = ['coin_permutation_choice']
+    form_fields = ['fair_outcome', 'biased_outcome']
 
     def before_next_page(self):
-        # Flip the chosen coin after the player makes a choice.
-        self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
+        # Combine fair and biased coin outcomes into coin_permutation_choice
+        self.player.coin_permutation_choice = f"{self.player.fair_outcome}{self.player.biased_outcome}"
 
     def is_displayed(self):
         return self.round_number <= C.NUM_ROUNDS
@@ -109,8 +94,6 @@ class ChoosePermutation(Page):
         return {
             'round_number': self.round_number
         }
-
-
 
 class Results(Page):
     """
@@ -121,6 +104,7 @@ class Results(Page):
         return {
             'winnings': sum([player.total_winnings for player in self.player.in_all_rounds()])
         }
+    
     def is_displayed(self):
         return self.round_number == C.NUM_ROUNDS
 
