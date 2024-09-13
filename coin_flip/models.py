@@ -1,9 +1,6 @@
-
 from otree.api import *
 from otree.models.participant import Participant as oTreeParticipant
 import numpy as np
-
-
 import random
 
 class ChooseCoin(Page):
@@ -13,7 +10,6 @@ class ChooseCoin(Page):
     def vars_for_template(self):
         # Define and shuffle the two coins
         coins = ['Fair', 'Biased']  # Capitalize here
-
         random.shuffle(coins)
         
         return {
@@ -23,14 +19,12 @@ class ChooseCoin(Page):
             'round_number': self.round_number
         }
 
-
     def is_displayed(self):
         return self.round_number <= C.NUM_ROUNDS
 
     def before_next_page(self):
         # Flip the chosen coin after the player makes a choice
         self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
-
 
 doc = """
 Curiosity and Information Demand
@@ -42,25 +36,33 @@ class C(BaseConstants):
     NAME_IN_URL = 'economics_experiment'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 10
-   # NUM_PRACTICE_ROUNDS=2
-    # WINNINGS = cu(0)
-
-# class Participant(oTreeParticipant):
-#     total_winnings = models.CurrencyField(initial=cu(0))
 
 class Player(BasePlayer):
-    
     # Choice between 'fair' or 'biased' coin
     coin_choice = models.StringField(choices=['fair', 'biased'])
+
     # Choice between HH, TT, HT, TH  where format is [Fair][Bias]
     coin_permutation_choice = models.StringField(choices=['HH', 'TT', 'HT', 'TH'], initial='')
-    
+
     # Results
     chosen_coin_result = models.StringField(initial='')
     chosen_coin_permutation = models.StringField(initial='')
     coin_permutation_result = models.StringField(initial='')
 
     total_winnings = models.CurrencyField(initial=cu(0))
+
+    # New fields for guessing the outcome of each coin individually
+    fair_outcome = models.StringField(
+        choices=['H', 'T'],
+        widget=widgets.RadioSelect,
+        label="Your guess for the outcome of the Fair coin"
+    )
+
+    biased_outcome = models.StringField(
+        choices=['H', 'T'],
+        widget=widgets.RadioSelect,
+        label="Your guess for the outcome of the Biased coin"
+    )
 
     def flip_chosen_coin(self, p_fair: float, p_biased: float):
         """
@@ -89,7 +91,7 @@ class Player(BasePlayer):
                 # Flip the fair coin since biased was already flipped
                 second_coin_result = 'H' if np.random.rand() < p_fair else 'T'
                 # Concatenate the string outcomes
-                self.coin_permutation_result =  second_coin_result + self.chosen_coin_result
+                self.coin_permutation_result = second_coin_result + self.chosen_coin_result
 
             # Concatenate the string outcomes
             self.coin_permutation_result = self.chosen_coin_result + second_coin_result
@@ -102,9 +104,8 @@ class Player(BasePlayer):
             if debug:
                 print(f'permutation choice: {self.coin_permutation_choice}')
                 print(f'permutation result: {self.coin_permutation_result}')
-                print(self.coin_permutation_result==self.coin_permutation_choice)
+                print(self.coin_permutation_result == self.coin_permutation_choice)
                 print(sum([player.total_winnings for player in self.in_all_rounds()]))
-
 
 class Group(BaseGroup):
     pass
