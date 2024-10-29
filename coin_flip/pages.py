@@ -177,6 +177,7 @@ page_sequence = [
     PracticeRevealCoinOutcome,
     PracticeChoosePermutation,
     # Real rounds
+    RoundInfo,
     ChooseCoin,
     RevealCoinOutcome,
     ChoosePermutation,
