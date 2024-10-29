@@ -27,7 +27,7 @@ class Introduction2(Page):
 class PracticeChooseCoin(Page):
     form_model = 'player'
     form_fields = ['coin_choice']
-    template_name = 'coin_flip/practicechoosecoin.html'
+    template_name = 'coin_flip/PracticeChooseCoin.html'
 
     def vars_for_template(self):
         # Define and shuffle the two coins
