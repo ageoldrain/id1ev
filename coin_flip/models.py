@@ -1,5 +1,6 @@
+# models.py
+
 from otree.api import *
-import numpy as np
 import random
 
 doc = """
@@ -11,7 +12,9 @@ debug = False
 class C(BaseConstants):
     NAME_IN_URL = 'economics_experiment'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 10
+    PRACTICE_ROUNDS = 3  # Number of practice rounds
+    REAL_ROUNDS = 10     # Number of real rounds
+    NUM_ROUNDS = PRACTICE_ROUNDS + REAL_ROUNDS  # Total rounds (13)
 
 class Subsession(BaseSubsession):
     def creating_session(self):
@@ -25,11 +28,11 @@ class Group(BaseGroup):
     pass
 
 class Player(BasePlayer):
-    # Choice between 'fair' or 'biased' coin
+    # Player's choice between 'fair' or 'biased' coin
     coin_choice = models.StringField(choices=['fair', 'biased'])
     chosen_coin = models.StringField()
 
-    # Player's guesses for each coin
+    # Player's guesses for the outcome of each coin
     fair_outcome = models.StringField(
         choices=['H', 'T'],
         label="Your guess for the outcome of the Fair coin"
@@ -79,14 +82,17 @@ class Player(BasePlayer):
     def calculate_winnings(self, p_fair: float, p_biased: float):
         """
         Calculate the player's winnings based on their guesses and the coin results.
+        Only updates total_winnings if it's a real round.
         """
-        # Check if the player guessed the outcome of the chosen coin correctly
-        if self.coin_choice == 'fair':
-            if self.fair_outcome == self.fair_coin_result:
-                self.total_winnings += p_biased * 2  # Expected value of biased coin
-        elif self.coin_choice == 'biased':
-            if self.biased_outcome == self.biased_coin_result:
-                self.total_winnings += p_fair * 2  # Expected value of fair coin
-
-        if debug:
-            print(f"Player's total winnings: {self.total_winnings}")
+        # Only calculate winnings for real rounds
+        if self.round_number > C.PRACTICE_ROUNDS:
+            # Check if the player guessed the outcome of the chosen coin correctly
+            if self.coin_choice == 'fair':
+                if self.fair_outcome == self.fair_coin_result:
+                    self.total_winnings += p_biased * 2  # Expected value of biased coin
+            elif self.coin_choice == 'biased':
+                if self.biased_outcome == self.biased_coin_result:
+                    self.total_winnings += p_fair * 2  # Expected value of fair coin
+        else:
+            if debug:
+                print(f"Round {self.round_number} is a practice round. No winnings added.")
