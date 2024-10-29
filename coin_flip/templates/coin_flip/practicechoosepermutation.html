@@ -1,0 +1,42 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center my-4" style="color: red;">PRACTICE ROUND</h2>
+    <h3 class="text-center my-4">Please guess the outcome of both coins for this practice round:</h3>
+
+    <form method="post">
+        <div class="d-flex justify-content-center mb-3">
+            {% for coin in coins %}
+                <div class="mx-4 text-center">
+                    <h5>Outcome of the {{ coin.1 }} Coin</h5>
+                    {% for choice in ['H', 'T'] %}
+                        <label class="btn btn-primary mx-2">
+                            <input type="radio" name="{{ coin.0 }}_outcome" value="{{ choice }}" required>
+                            {% if choice == 'H' %}
+                                Heads
+                            {% else %}
+                                Tails
+                            {% endif %}
+                        </label>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Display form errors if any -->
+        {% for field in form %}
+            {% if field.errors %}
+                <div class="alert alert-danger text-center">
+                    {{ field.errors }}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <div class="d-flex justify-content-center">
+            {% next_button %}
+        </div>
+    </form>
+</div>
+{% endblock %}
