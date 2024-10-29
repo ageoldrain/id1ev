@@ -23,11 +23,10 @@ class Introduction2(Page):
     def is_displayed(self):
         return self.round_number == 1
 
-
 class PracticeChooseCoin(Page):
     form_model = 'player'
     form_fields = ['coin_choice']
-    template_name = 'coin_flip/PracticeChooseCoin.html'
+    template_name = 'coin_flip/PracticeChooseCoin.html'  # Matches your capitalized file name
 
     def vars_for_template(self):
         # Define and shuffle the two coins
@@ -54,6 +53,7 @@ class PracticeChooseCoin(Page):
 class ChooseCoin(Page):
     form_model = 'player'
     form_fields = ['coin_choice']
+    template_name = 'coin_flip/ChooseCoin.html'  # Specify the template name with capital letters
 
     def vars_for_template(self):
         coins = [('fair', 'Fair'), ('biased', 'Biased')]
@@ -72,10 +72,9 @@ class ChooseCoin(Page):
         # Show this page only during real rounds
         return self.round_number > 3
 
-# Similarly, create practice versions of other pages if needed
-
 class PracticeRevealCoinOutcome(Page):
-    template_name = 'coin_flip/RevealCoinOutcome.html'  # Use the same template
+    template_name = 'coin_flip/PracticeRevealCoinOutcome.html'  # Use your capitalized file name
+
     def vars_for_template(self):
         return {
             'chosen_coin': self.player.chosen_coin.capitalize(),
@@ -87,6 +86,8 @@ class PracticeRevealCoinOutcome(Page):
         return self.round_number <= 3
 
 class RevealCoinOutcome(Page):
+    template_name = 'coin_flip/RevealCoinOutcome.html'  # Specify the template name
+
     def vars_for_template(self):
         return {
             'chosen_coin': self.player.chosen_coin.capitalize(),
@@ -99,7 +100,7 @@ class RevealCoinOutcome(Page):
 
 class PracticeChoosePermutation(Page):
     form_model = 'player'
-    template_name = 'coin_flip/ChoosePermutation.html'  # Use the same template
+    template_name = 'coin_flip/PracticeChoosePermutation.html'  # Use your capitalized file name
 
     def get_form_fields(self):
         coins = self.participant.vars.get('coin_order', [('fair', 'Fair'), ('biased', 'Biased')])
@@ -122,6 +123,7 @@ class PracticeChoosePermutation(Page):
 
 class ChoosePermutation(Page):
     form_model = 'player'
+    template_name = 'coin_flip/ChoosePermutation.html'  # Specify the template name
 
     def get_form_fields(self):
         coins = self.participant.vars.get('coin_order', [('fair', 'Fair'), ('biased', 'Biased')])
@@ -164,19 +166,20 @@ page_sequence = [
     Introduction1point5,
     Introduction1point6,
     Introduction2,
+    # Practice rounds
     PracticeChooseCoin,
     PracticeRevealCoinOutcome,
     PracticeChoosePermutation,
-    # Repeat the practice pages for three practice rounds
     PracticeChooseCoin,
     PracticeRevealCoinOutcome,
     PracticeChoosePermutation,
     PracticeChooseCoin,
     PracticeRevealCoinOutcome,
     PracticeChoosePermutation,
-    # Now include the real rounds
+    # Real rounds
     ChooseCoin,
     RevealCoinOutcome,
     ChoosePermutation,
     Results,
 ]
+
