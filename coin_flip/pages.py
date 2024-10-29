@@ -11,7 +11,18 @@ class Introduction(Page):
     def is_displayed(self):
         return self.round_number == 1
 
-# ... other introduction pages
+class Introduction1point5(Page):
+    def is_displayed(self):
+        return self.round_number == 1
+
+class Introduction1point6(Page):
+    def is_displayed(self):
+        return self.round_number == 1
+
+class Introduction2(Page):
+    def is_displayed(self):
+        return self.round_number == 1
+
 
 class PracticeChooseCoin(Page):
     form_model = 'player'
