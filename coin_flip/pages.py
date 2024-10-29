@@ -39,20 +39,6 @@ class PracticeChooseCoin(Page):
             'round_number': self.round_number,
         }
 
-    class RoundInfo(Page):
-    template_name = 'coin_flip/RoundInfo.html'
-
-    def vars_for_template(self):
-        is_practice_round = self.round_number <= C.PRACTICE_ROUNDS
-
-        return {
-            'round_number': self.round_number - C.PRACTICE_ROUNDS if not is_practice_round else self.round_number,
-            'is_practice_round': is_practice_round,
-            'practice_rounds': C.PRACTICE_ROUNDS,
-        }
-
-    def is_displayed(self):
-        return True
 
 
 
@@ -66,6 +52,22 @@ class PracticeChooseCoin(Page):
     def is_displayed(self):
         # Show this page only during practice rounds (e.g., rounds 1-3)
         return self.round_number <= 3
+
+
+class RoundInfo(Page):
+    template_name = 'coin_flip/RoundInfo.html'
+
+    def vars_for_template(self):
+        is_practice_round = self.round_number <= C.PRACTICE_ROUNDS
+
+        return {
+            'round_number': self.round_number - C.PRACTICE_ROUNDS if not is_practice_round else self.round_number,
+            'is_practice_round': is_practice_round,
+            'practice_rounds': C.PRACTICE_ROUNDS,
+        }
+
+    def is_displayed(self):
+        return True
 
 class ChooseCoin(Page):
     form_model = 'player'
