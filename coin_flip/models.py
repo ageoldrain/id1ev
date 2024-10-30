@@ -1,6 +1,7 @@
 # models.py
 
 from otree.api import *
+from otree.api import BaseConstants
 import random
 
 doc = """
@@ -9,12 +10,15 @@ Curiosity and Information Demand
 
 debug = False
 
+
+
 class C(BaseConstants):
-    NAME_IN_URL = 'economics_experiment'
+    NAME_IN_URL = 'coin_flip'
     PLAYERS_PER_GROUP = None
+    NUM_INTRO_PAGES = 4  # Number of introduction pages
     PRACTICE_ROUNDS = 3  # Number of practice rounds
     REAL_ROUNDS = 10     # Number of real rounds
-    NUM_ROUNDS = PRACTICE_ROUNDS + REAL_ROUNDS  # Total rounds (13)
+    NUM_ROUNDS = NUM_INTRO_PAGES + PRACTICE_ROUNDS + REAL_ROUNDS
 
 class Subsession(BaseSubsession):
     def creating_session(self):
