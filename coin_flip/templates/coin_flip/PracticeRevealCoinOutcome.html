@@ -3,11 +3,17 @@
 
 {% block content %}
 <div class="container">
-    <h2 class="text-center my-4" style="color: red;">PRACTICE ROUND</h2>
+    <h2 class="text-center my-4" style="color: red;">PRACTICE ROUND {{ practice_round_number }}</h2>
     <h3 class="text-center my-4">The outcome of your chosen coin is:</h3>
 
     <div class="text-center my-4">
-        <h1>{{ chosen_coin_result }}</h1>
+        <h1>
+            {% if chosen_coin_result == 'H' %}
+                Heads
+            {% else %}
+                Tails
+            {% endif %}
+        </h1>
         <p>You chose the {{ chosen_coin }} coin.</p>
     </div>
 
