@@ -3,7 +3,13 @@
 
 {% block content %}
 <div class="container">
-    <h2 class="text-center my-4">This is round number {{ round_number }}. Please guess the outcome of both coins for this round:</h2>
+    {% if is_practice_round %}
+        <h2 class="text-center my-4" style="color: red;">PRACTICE ROUND {{ practice_round_number }}</h2>
+        <h3 class="text-center my-4">Please guess the outcome of both coins for this practice round:</h3>
+    {% else %}
+        <h2 class="text-center my-4">Round {{ real_round_number }}</h2>
+        <h3 class="text-center my-4">Please guess the outcome of both coins for this round:</h3>
+    {% endif %}
 
     <form method="post">
         <div class="d-flex justify-content-center mb-3">
@@ -38,23 +44,23 @@
         </div>
     </form>
 </div>
-    <!-- Review Instructions Section -->
-    <div class="accordion">Review Instructions</div>
-    <div class="panel">
-        <p>
-            The experiment proceeds in rounds. In each round, two coins will be flipped - a fair one (with equal probabilities of landing heads or tails), and a biased one (with a high chance of landing heads). You will <b>not</b> be informed of their outcomes automatically.
-        </p>
-        <p>
-            Each round has two questions. First, you will be given the option to <b>find out the outcome of one of the two coins</b>. Once you choose the coin, the outcome will be revealed to you on the next page.
-            After that, you will be asked to guess the outcome of <b>both</b> coins.
-        </p>
-        <p>
-            Each coin is "worth" $1. If you guess correctly in the second question, you will receive $2 ($1 for each coin guessed correctly). If not, you will receive $0. You will not see whether you won immediately; your winnings will be revealed only at the end of the 10 rounds.
-        </p>
-        <p>
-            This process will continue for 10 rounds. The experiment will end after you complete all 10 rounds.
-        </p>
-    </div>
+<!-- Review Instructions Section -->
+<div class="accordion">Review Instructions</div>
+<div class="panel">
+    <p>
+        The experiment proceeds in rounds. In each round, two coins will be flipped - a fair one (with equal probabilities of landing heads or tails), and a biased one (with a high chance of landing heads). You will <b>not</b> be informed of their outcomes automatically.
+    </p>
+    <p>
+        Each round has two questions. First, you will be given the option to <b>find out the outcome of one of the two coins</b>. Once you choose the coin, the outcome will be revealed to you on the next page.
+        After that, you will be asked to guess the outcome of <b>both</b> coins.
+    </p>
+    <p>
+        Each coin is "worth" $1. If you guess correctly in the second question, you will receive $2 ($1 for each coin guessed correctly). If not, you will receive $0. You will not see whether you won immediately; your winnings will be revealed only at the end of the 10 rounds.
+    </p>
+    <p>
+        This process will continue for 10 rounds. The experiment will end after you complete all 10 rounds.
+    </p>
+</div>
 
 <style>
     .coin-label {
