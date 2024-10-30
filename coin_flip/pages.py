@@ -183,12 +183,7 @@ page_sequence = [
     PracticeChooseCoin,
     PracticeRevealCoinOutcome,
     PracticeChoosePermutation,
-    PracticeChooseCoin,
-    PracticeRevealCoinOutcome,
-    PracticeChoosePermutation,
-    PracticeChooseCoin,
-    PracticeRevealCoinOutcome,
-    PracticeChoosePermutation,
+
     # Real rounds
     RoundInfo,
     ChooseCoin,
