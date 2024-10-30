@@ -4,10 +4,10 @@
 {% block content %}
 <div class="container">
     {% if is_practice_round %}
-        <h2 class="text-center my-4" style="color: red;">PRACTICE ROUND</h2>
+        <h2 class="text-center my-4" style="color: red;">PRACTICE ROUND {{ practice_round_number }}</h2>
         <h3 class="text-center my-4">The outcome of which coin would you like to reveal?</h3>
     {% else %}
-        <h2 class="text-center my-4">Round {{ round_number }}</h2>
+        <h2 class="text-center my-4">Round {{ real_round_number }}</h2>
         <h3 class="text-center my-4">The outcome of which coin would you like to reveal?</h3>
     {% endif %}
 
@@ -17,7 +17,7 @@
                 <!-- Loop through the coins list -->
                 {% for coin in coins %}
                     <label class="btn btn-primary mx-2 coin-label">
-                        <input type="radio" name="{{ form.coin_choice.name }}" value="{{ coin.0 }}" class="coin-input" required>
+                        <input type="radio" name="coin_choice" value="{{ coin.0 }}" class="coin-input" required>
                         <img src="{% static 'coin_flip/CoinImage.png' %}" alt="{{ coin.1 }}" class="coin-image">
                         <div>{{ coin.1 }}</div>
                     </label>
