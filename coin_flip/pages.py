@@ -23,6 +23,7 @@ class Introduction2(Page):
     def is_displayed(self):
         return self.round_number == 1
 
+# Practice Rounds
 class PracticeChooseCoin(Page):
     form_model = 'player'
     form_fields = ['coin_choice']
@@ -34,55 +35,18 @@ class PracticeChooseCoin(Page):
         self.participant.vars['coin_order'] = coins
         return {
             'coins': coins,
-            'round_number': self.round_number,
-            'is_practice_round': True,  # Explicitly set to True
+            'practice_round_number': self.round_number,  # Use the actual round_number
+            'is_practice_round': True,
         }
 
     def before_next_page(self):
         self.player.chosen_coin = self.player.coin_choice
+        # Flip the coins after the player makes a choice
+        # Since it's a practice round, we flip the coins but won't affect total_winnings
         self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
 
     def is_displayed(self):
         return self.round_number <= C.PRACTICE_ROUNDS
-
-class RoundInfo(Page):
-    template_name = 'coin_flip/RoundInfo.html'
-
-    def vars_for_template(self):
-        is_practice_round = self.round_number <= C.PRACTICE_ROUNDS
-
-        return {
-            'round_number': self.round_number - C.PRACTICE_ROUNDS if not is_practice_round else self.round_number,
-            'is_practice_round': is_practice_round,
-        }
-
-    def is_displayed(self):
-        return True
-
-class ChooseCoin(Page):
-    form_model = 'player'
-    form_fields = ['coin_choice']
-    template_name = 'coin_flip/ChooseCoin.html'
-
-    def vars_for_template(self):
-        coins = [('fair', 'Fair'), ('biased', 'Biased')]
-        random.shuffle(coins)
-        self.participant.vars['coin_order'] = coins
-
-        is_practice_round = False  # Since this is a real round
-        adjusted_round_number = self.round_number - C.PRACTICE_ROUNDS
-        return {
-            'coins': coins,
-            'round_number': adjusted_round_number,
-            'is_practice_round': is_practice_round,
-        }
-
-    def before_next_page(self):
-        self.player.chosen_coin = self.player.coin_choice
-        self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
-
-    def is_displayed(self):
-        return self.round_number > C.PRACTICE_ROUNDS
 
 class PracticeRevealCoinOutcome(Page):
     template_name = 'coin_flip/PracticeRevealCoinOutcome.html'
@@ -91,28 +55,12 @@ class PracticeRevealCoinOutcome(Page):
         return {
             'chosen_coin': self.player.chosen_coin.capitalize(),
             'chosen_coin_result': self.player.chosen_coin_result,
-            'round_number': self.round_number,
-            'is_practice_round': True,  # Explicitly set to True
+            'practice_round_number': self.round_number,
+            'is_practice_round': True,
         }
 
     def is_displayed(self):
         return self.round_number <= C.PRACTICE_ROUNDS
-
-class RevealCoinOutcome(Page):
-    template_name = 'coin_flip/RevealCoinOutcome.html'
-
-    def vars_for_template(self):
-        is_practice_round = False  # Since this is a real round
-        adjusted_round_number = self.round_number - C.PRACTICE_ROUNDS
-        return {
-            'chosen_coin': self.player.chosen_coin.capitalize(),
-            'chosen_coin_result': self.player.chosen_coin_result,
-            'round_number': adjusted_round_number,
-            'is_practice_round': is_practice_round,
-        }
-
-    def is_displayed(self):
-        return self.round_number > C.PRACTICE_ROUNDS
 
 class PracticeChoosePermutation(Page):
     form_model = 'player'
@@ -126,15 +74,77 @@ class PracticeChoosePermutation(Page):
         coins = self.participant.vars['coin_order']
         return {
             'coins': coins,
-            'round_number': self.round_number,
-            'is_practice_round': True,  # Explicitly set to True
+            'practice_round_number': self.round_number,
+            'is_practice_round': True,
         }
 
     def before_next_page(self):
-        pass
+        pass  # No action needed for practice rounds
 
     def is_displayed(self):
         return self.round_number <= C.PRACTICE_ROUNDS
+
+# Real Rounds
+class RoundInfo(Page):
+    template_name = 'coin_flip/RoundInfo.html'
+
+    def vars_for_template(self):
+        is_practice_round = self.round_number <= C.PRACTICE_ROUNDS
+        if is_practice_round:
+            practice_round_number = self.round_number
+            real_round_number = None
+        else:
+            practice_round_number = None
+            real_round_number = self.round_number - C.PRACTICE_ROUNDS
+
+        return {
+            'practice_round_number': practice_round_number,
+            'real_round_number': real_round_number,
+            'is_practice_round': is_practice_round,
+        }
+
+    def is_displayed(self):
+        # Display in all rounds
+        return True
+
+class ChooseCoin(Page):
+    form_model = 'player'
+    form_fields = ['coin_choice']
+    template_name = 'coin_flip/ChooseCoin.html'
+
+    def vars_for_template(self):
+        coins = [('fair', 'Fair'), ('biased', 'Biased')]
+        random.shuffle(coins)
+        self.participant.vars['coin_order'] = coins
+
+        real_round_number = self.round_number - C.PRACTICE_ROUNDS
+        return {
+            'coins': coins,
+            'real_round_number': real_round_number,
+            'is_practice_round': False,
+        }
+
+    def before_next_page(self):
+        self.player.chosen_coin = self.player.coin_choice
+        self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
+
+    def is_displayed(self):
+        return self.round_number > C.PRACTICE_ROUNDS
+
+class RevealCoinOutcome(Page):
+    template_name = 'coin_flip/RevealCoinOutcome.html'
+
+    def vars_for_template(self):
+        real_round_number = self.round_number - C.PRACTICE_ROUNDS
+        return {
+            'chosen_coin': self.player.chosen_coin.capitalize(),
+            'chosen_coin_result': self.player.chosen_coin_result,
+            'real_round_number': real_round_number,
+            'is_practice_round': False,
+        }
+
+    def is_displayed(self):
+        return self.round_number > C.PRACTICE_ROUNDS
 
 class ChoosePermutation(Page):
     form_model = 'player'
@@ -146,12 +156,11 @@ class ChoosePermutation(Page):
 
     def vars_for_template(self):
         coins = self.participant.vars['coin_order']
-        is_practice_round = False  # Since this is a real round
-        adjusted_round_number = self.round_number - C.PRACTICE_ROUNDS
+        real_round_number = self.round_number - C.PRACTICE_ROUNDS
         return {
             'coins': coins,
-            'round_number': adjusted_round_number,
-            'is_practice_round': is_practice_round,
+            'real_round_number': real_round_number,
+            'is_practice_round': False,
         }
 
     def before_next_page(self):
@@ -165,6 +174,7 @@ class ChoosePermutation(Page):
 
 class Results(Page):
     def vars_for_template(self):
+        # Sum over all winnings from real rounds only
         real_rounds = self.player.in_rounds(C.PRACTICE_ROUNDS + 1, C.NUM_ROUNDS)
         total_winnings = sum([p.total_winnings for p in real_rounds])
         return {
