@@ -162,7 +162,7 @@ class ChoosePermutation(Page):
         coins = self.participant.vars['coin_order']
         outcomes = [getattr(self.player, f"{coin[0]}_outcome") for coin in coins]
         self.player.coin_permutation_choice = ''.join(outcomes)
-        self.player.calculate_winnings(p_fair=P_FAIR, p_biased=P_BIASED)
+        self.player.calculate_winnings()  # Call without parameters
 
     def is_displayed(self):
         return self.round_number > C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
