@@ -169,15 +169,11 @@ class ChoosePermutation(Page):
 
 class Results(Page):
     def vars_for_template(self):
-        # Sum over all winnings from real rounds only
-        real_rounds_start = C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS + 1
-        real_rounds_end = C.NUM_ROUNDS
-        real_rounds = self.player.in_rounds(real_rounds_start, real_rounds_end)
+        # Get the player's total winnings
         total_winnings = self.player.total_winnings
         return {
             'winnings': total_winnings
         }
-
 
     def is_displayed(self):
         return self.round_number == C.NUM_ROUNDS
