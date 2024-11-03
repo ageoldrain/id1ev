@@ -1,7 +1,6 @@
 # models.py
 
 from otree.api import *
-from otree.api import BaseConstants
 import random
 
 doc = """
@@ -9,8 +8,6 @@ Curiosity and Information Demand
 """
 
 debug = False
-
-
 
 class C(BaseConstants):
     NAME_IN_URL = 'coin_flip'
@@ -21,12 +18,7 @@ class C(BaseConstants):
     NUM_ROUNDS = NUM_INTRO_PAGES + PRACTICE_ROUNDS + REAL_ROUNDS
 
 class Subsession(BaseSubsession):
-    def creating_session(self):
-        for player in self.get_players():
-            if 'fair_left' not in self.session.vars:
-                self.session.vars['fair_left'] = 0  # Or some default value
-            if 'biased_left' not in self.session.vars:
-                self.session.vars['biased_left'] = 0  # Or some default value
+    pass  # Removed unused code
 
 class Group(BaseGroup):
     pass
@@ -83,21 +75,21 @@ class Player(BasePlayer):
             print(f"Chosen coin result: {self.chosen_coin_result}")
             print(f"Coin permutation result: {self.coin_permutation_result}")
 
-def calculate_winnings(self):
-    """
-    Calculate the player's winnings based on their guesses and the coin results.
-    Only updates total_winnings if it's a real round.
-    """
-    real_round_number = self.round_number - C.NUM_INTRO_PAGES - C.PRACTICE_ROUNDS
-    if real_round_number > 0:
-        # Check if the player guessed both coin outcomes correctly
-        if self.fair_outcome == self.fair_coin_result and self.biased_outcome == self.biased_coin_result:
-            round_winnings = cu(2)
+    def calculate_winnings(self):
+        """
+        Calculate the player's winnings based on their guesses and the coin results.
+        Only updates total_winnings if it's a real round.
+        """
+        real_round_number = self.round_number - C.NUM_INTRO_PAGES - C.PRACTICE_ROUNDS
+        if real_round_number > 0:
+            # Check if the player guessed both coin outcomes correctly
+            if self.fair_outcome == self.fair_coin_result and self.biased_outcome == self.biased_coin_result:
+                round_winnings = cu(2)
+            else:
+                round_winnings = cu(0)
+            # Add this round's winnings to total_winnings
+            previous_total = self.in_round(self.round_number - 1).total_winnings if self.round_number > 1 else cu(0)
+            self.total_winnings = previous_total + round_winnings
         else:
-            round_winnings = cu(0)
-        # Add this round's winnings to total_winnings
-        previous_total = self.in_round(self.round_number - 1).total_winnings if self.round_number > 1 else cu(0)
-        self.total_winnings = previous_total + round_winnings
-    else:
-        if debug:
-            print(f"Round {self.round_number} is a practice round. No winnings added.")
+            if debug:
+                print(f"Round {self.round_number} is a practice round. No winnings added.")
