@@ -1,5 +1,3 @@
-# pages.py
-
 from otree.api import Page
 from .models import C, Player
 import random
@@ -33,7 +31,9 @@ class PracticeChooseCoin(Page):
     def vars_for_template(self):
         coins = [('fair', 'Fair'), ('biased', 'Biased')]
         random.shuffle(coins)
+        # Save the order of coins to the player model
         self.participant.vars['coin_order'] = coins
+        self.player.coin_order = ','.join([coin[0] for coin in coins])
         practice_round_number = self.round_number - C.NUM_INTRO_PAGES
         return {
             'coins': coins,
@@ -83,7 +83,10 @@ class PracticeChoosePermutation(Page):
         }
 
     def before_next_page(self):
-        pass  # No action needed for practice rounds
+        coins = self.participant.vars['coin_order']
+        outcomes = [getattr(self.player, f"{coin[0]}_outcome") for coin in coins]
+        # Save permutation choice to player model
+        self.player.coin_permutation_choice = ''.join(outcomes)
 
     def is_displayed(self):
         return C.NUM_INTRO_PAGES < self.round_number <= C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
@@ -110,7 +113,9 @@ class ChooseCoin(Page):
     def vars_for_template(self):
         coins = [('fair', 'Fair'), ('biased', 'Biased')]
         random.shuffle(coins)
+        # Save the order of coins to the player model
         self.participant.vars['coin_order'] = coins
+        self.player.coin_order = ','.join([coin[0] for coin in coins])
 
         real_round_number = self.round_number - C.NUM_INTRO_PAGES - C.PRACTICE_ROUNDS
         return {
@@ -161,6 +166,7 @@ class ChoosePermutation(Page):
     def before_next_page(self):
         coins = self.participant.vars['coin_order']
         outcomes = [getattr(self.player, f"{coin[0]}_outcome") for coin in coins]
+        # Save permutation choice to player model
         self.player.coin_permutation_choice = ''.join(outcomes)
         self.player.calculate_winnings()  # Call without parameters
 
