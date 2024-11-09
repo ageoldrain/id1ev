@@ -44,6 +44,8 @@ class Player(BasePlayer):
     biased_coin_result = models.StringField()
     coin_permutation_choice = models.StringField()
     coin_permutation_result = models.StringField()
+    coin_order = models.StringField()  # Store the order of the coins (e.g., 'fair,biased' or 'biased,fair')
+
 
     total_winnings = models.CurrencyField(initial=cu(0))
 
