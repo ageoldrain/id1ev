@@ -18,7 +18,13 @@
                         <input type="radio" name="coin_choice" value="{{ coin.0 }}" class="coin-input" required>
                         <img src="{% static 'coin_flip/CoinImage1.png' %}" alt="{{ coin.1 }}" class="coin-image">
                         <div>{{ coin.1 }}</div>
-                        <div>Value=${{ coin.0 == 'fair' and fair_coin_value or biased_coin_value }}</div>
+                        <div>Value=$
+                            {% if coin.0 == 'fair' %}
+                                {{ fair_coin_value }}
+                            {% else %}
+                                {{ biased_coin_value }}
+                            {% endif %}
+                        </div>
                     </label>
                 {% endfor %}
             </div>
