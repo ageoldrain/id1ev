@@ -1,5 +1,3 @@
-# models.py
-
 from otree.api import *
 import random
 
@@ -18,7 +16,10 @@ class C(BaseConstants):
     NUM_ROUNDS = NUM_INTRO_PAGES + PRACTICE_ROUNDS + REAL_ROUNDS
 
 class Subsession(BaseSubsession):
-    pass  # Removed unused code
+    def creating_session(self):
+        for player in self.get_players():
+            player.fair_coin_value = cu(random.choice([1, 2]))
+            player.biased_coin_value = cu(random.choice([1, 2]))
 
 class Group(BaseGroup):
     pass
@@ -48,7 +49,6 @@ class Player(BasePlayer):
     coin_permutation_result = models.StringField()
     coin_order = models.StringField()  # Store the order of the coins (e.g., 'fair,biased' or 'biased,fair')
 
-
     total_winnings = models.CurrencyField(initial=cu(0))
 
     def flip_chosen_coin(self, p_fair: float, p_biased: float):
@@ -62,14 +62,6 @@ class Player(BasePlayer):
         self.fair_coin_result = 'H' if random.random() < p_fair else 'T'
         # Flip the biased coin
         self.biased_coin_result = 'H' if random.random() < p_biased else 'T'
-
-        # Store the result of the chosen coin
-        if self.coin_choice == 'fair':
-            self.chosen_coin_result = self.fair_coin_result
-        elif self.coin_choice == 'biased':
-            self.chosen_coin_result = self.biased_coin_result
-        self.fair_coin_value = cu(random.choice([1, 2]))
-        self.biased_coin_value = cu(random.choice([1, 2]))
 
         # Store the result of the chosen coin
         if self.coin_choice == 'fair':
