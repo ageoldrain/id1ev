@@ -10,7 +10,7 @@
     {% else %}
         <h2 class="text-center my-4">Round {{ real_round_number }}</h2>
         <h3 class="text-center my-4">Please guess the outcome of both coins for this round:</h3>
-        <p class="text-center" style="font-size: smaller;">In this round the fair coin is worth {{ fair_coin_value }} and the biased coin is worth {{ biased_coin_value }}</p>
+        <p class="text-center" style="font-size: smaller;">In this round the fair coin is worth <strong>{{ fair_coin_value }}</strong> and the biased coin is worth <strong>{{ biased_coin_value }}</strong></p>
     {% endif %}
 
     <form method="post">
