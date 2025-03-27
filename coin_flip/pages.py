@@ -39,6 +39,8 @@ class PracticeChooseCoin(Page):
             'coins': coins,
             'practice_round_number': practice_round_number,
             'is_practice_round': True,
+            'fair_coin_value': self.player.fair_coin_value,
+            'biased_coin_value': self.player.biased_coin_value,
         }
 
     def before_next_page(self):
@@ -80,6 +82,8 @@ class PracticeChoosePermutation(Page):
             'coins': coins,
             'practice_round_number': practice_round_number,
             'is_practice_round': True,
+            'fair_coin_value': self.player.fair_coin_value,
+            'biased_coin_value': self.player.biased_coin_value,
         }
 
     def before_next_page(self):
@@ -122,6 +126,8 @@ class ChooseCoin(Page):
             'coins': coins,
             'real_round_number': real_round_number,
             'is_practice_round': False,
+            'fair_coin_value': self.player.fair_coin_value,
+            'biased_coin_value': self.player.biased_coin_value,
         }
 
     def before_next_page(self):
@@ -161,6 +167,8 @@ class ChoosePermutation(Page):
             'coins': coins,
             'real_round_number': real_round_number,
             'is_practice_round': False,
+            'fair_coin_value': self.player.fair_coin_value,
+            'biased_coin_value': self.player.biased_coin_value,
         }
 
     def before_next_page(self):
