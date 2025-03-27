@@ -6,9 +6,11 @@
     {% if is_practice_round %}
         <h2 class="text-center my-4" style="color: red;">PRACTICE ROUND {{ practice_round_number }}</h2>
         <h3 class="text-center my-4">The outcome of which coin would you like to reveal?</h3>
+        <p class="text-center" style="font-size: smaller;">In this round the fair coin is worth ${{ player.fair_coin_value }} and the biased coin is worth ${{ player.biased_coin_value }}</p>
     {% else %}
         <h2 class="text-center my-4">Round {{ real_round_number }}</h2>
         <h3 class="text-center my-4">The outcome of which coin would you like to reveal?</h3>
+        <p class="text-center" style="font-size: smaller;">In this round the fair coin is worth ${{ player.fair_coin_value }} and the biased coin is worth ${{ player.biased_coin_value }}</p>
     {% endif %}
 
     <form method="post">
@@ -20,6 +22,7 @@
                         <input type="radio" name="coin_choice" value="{{ coin.0 }}" class="coin-input" required>
                         <img src="{% static 'coin_flip/CoinImage1.png' %}" alt="{{ coin.1 }}" class="coin-image">
                         <div>{{ coin.1 }}</div>
+                        <div>Value=${{ coin.0 == 'fair' and player.fair_coin_value or player.biased_coin_value }}</div>
                     </label>
                 {% endfor %}
             </div>
