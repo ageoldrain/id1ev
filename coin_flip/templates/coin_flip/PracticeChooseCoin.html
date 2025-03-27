@@ -1,10 +1,13 @@
 {% extends "global/Page.html" %}
-{% load otree %}
+{% load otree static %}
 
 {% block content %}
 <div class="container">
-    <h2 class="text-center my-4" style="color: red;">PRACTICE ROUND</h2>
-    <h3 class="text-center my-4">The outcome of which coin would you like to reveal?</h3>
+    {% if is_practice_round %}
+        <h2 class="text-center my-4" style="color: red;">PRACTICE ROUND {{ practice_round_number }}</h2>
+        <h3 class="text-center my-4">The outcome of which coin would you like to reveal?</h3>
+        <p class="text-center" style="font-size: smaller;">In this round the fair coin is worth ${{ fair_coin_value }} and the biased coin is worth ${{ biased_coin_value }}</p>
+    {% endif %}
 
     <form method="post">
         <div class="d-flex justify-content-center mb-3">
@@ -12,9 +15,10 @@
                 <!-- Loop through the coins list -->
                 {% for coin in coins %}
                     <label class="btn btn-primary mx-2 coin-label">
-                        <input type="radio" name="{{ form.coin_choice.name }}" value="{{ coin.0 }}" class="coin-input" required>
+                        <input type="radio" name="coin_choice" value="{{ coin.0 }}" class="coin-input" required>
                         <img src="{% static 'coin_flip/CoinImage1.png' %}" alt="{{ coin.1 }}" class="coin-image">
                         <div>{{ coin.1 }}</div>
+                        <div>Value=${{ coin.0 == 'fair' and fair_coin_value or biased_coin_value }}</div>
                     </label>
                 {% endfor %}
             </div>
@@ -31,58 +35,55 @@
         </div>
     </form>
 
-    <!-- Include any instructions or additional content if needed -->
+    <!-- Include any additional instructions or content if necessary -->
 
-    <!-- Include styles and scripts as in choosecoin.html -->
-</div>
+    <!-- Include styles and scripts -->
+    <style>
+        .coin-label {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .coin-input {
+            display: none;
+        }
+        .coin-input:checked + img.coin-image {
+            border: 4px solid gold;
+            border-radius: 10px;
+        }
+        .coin-label:hover img.coin-image {
+            transform: scale(1.05);
+        }
+        .coin-image {
+            max-width: 200px;
+            transition: border 0.2s, transform 0.2s;
+        }
+    </style>
 
-<style>
-    /* Include your existing styles here */
-
-    .coin-label {
-        cursor: pointer;
-        transition: transform 0.2s;
-    }
-    .coin-input {
-        display: none;
-    }
-    .coin-input:checked + .coin-image {
-        border: 4px solid gold;
-        border-radius: 10px;
-    }
-    .coin-label:hover .coin-image {
-        transform: scale(1.05);
-    }
-    .coin-image {
-        max-width: 200px;
-        transition: border 0.2s, transform 0.2s;
-    }
-</style>
-
-<script>
-    // Highlight the selected coin
-    document.querySelectorAll('.coin-label').forEach(label => {
-        label.addEventListener('click', () => {
-            document.querySelectorAll('.coin-label').forEach(lbl => {
-                lbl.classList.remove('active');
+    <script>
+        // Highlight the selected coin
+        document.querySelectorAll('.coin-label').forEach(label => {
+            label.addEventListener('click', () => {
+                document.querySelectorAll('.coin-label').forEach(lbl => {
+                    lbl.classList.remove('active');
+                });
+                label.classList.add('active');
             });
-            label.classList.add('active');
         });
-    });
-</script>
+    </script>
+</div>
 
 <!-- Review Instructions Section -->
 <div class="accordion">Review Instructions</div>
 <div class="panel">
     <p>
-        The experiment proceeds in rounds. In each round, two coins will be flipped - a fair one (with equal probabilities of landing heads or tails), and a biased one (with a 95 out of 100 chance of landing heads). You will <b>not</b> be informed of their outcomes automatically.
+        The experiment proceeds in rounds. In each round, two coins will be flipped - a fair one (with equal probabilities of landing heads or tails), and a biased one (with a 95 out of 100 chance of landing heads).
     </p>
     <p>
-        Each round has two questions. First, you will be given the option to <b>find out the outcome of one of the two coins</b>. Once you choose the coin, the outcome will be revealed to you on the next page.
+        Each round has two questions. First, you will be given the option to <b>find out the outcome of one of the two coins</b>. Once you choose the coin, the outcome will be revealed to you on the next screen.
         After that, you will be asked to guess the outcome of <b>both</b> coins.
     </p>
     <p>
-        Each coin is "worth" $1. If you guess correctly in the second question, you will receive $2 ($1 for each coin guessed correctly). If not, you will receive $0. You will not see how much you have earned immediately; your earnings will be revealed only at the end of the 10 rounds.
+        Each coin is worth either $1 or $2, chosen randomly each round. If you guess correctly in the second question, you will receive the sum of the values of both coins. If not, you will receive $0. You will not see how much you earned until the end of the experiment.
     </p>
     <p>
         This process will continue for 10 rounds. The experiment will end after you complete all 10 rounds.
