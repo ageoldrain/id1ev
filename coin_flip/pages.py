@@ -48,6 +48,8 @@ class PracticeChooseCoin(Page):
         # Flip the coins after the player makes a choice
         # Since it's a practice round, we flip the coins but won't affect total_winnings
         self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
+        self.player.fair_coin_value = cu(random.choice([1, 2]))  # Set fair coin value
+        self.player.biased_coin_value = cu(random.choice([1, 2]))  # Set biased coin value
 
     def is_displayed(self):
         return C.NUM_INTRO_PAGES < self.round_number <= C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
@@ -93,7 +95,7 @@ class PracticeChoosePermutation(Page):
         self.player.coin_permutation_choice = ''.join(outcomes)
 
     def is_displayed(self):
-        return C.NUM_INTRO_PAGES < self.round_number <= C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
+        return C.NUM_INTRO_PAGES < self.round_number <= C.PRACTICE_ROUNDS
 
 # Real Rounds
 class RoundInfo(Page):
@@ -133,6 +135,8 @@ class ChooseCoin(Page):
     def before_next_page(self):
         self.player.chosen_coin = self.player.coin_choice
         self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
+        self.player.fair_coin_value = cu(random.choice([1, 2]))  # Set fair coin value
+        self.player.biased_coin_value = cu(random.choice([1, 2]))  # Set biased coin value
 
     def is_displayed(self):
         return self.round_number > C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
