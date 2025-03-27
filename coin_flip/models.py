@@ -27,6 +27,8 @@ class Player(BasePlayer):
     # Player's choice between 'fair' or 'biased' coin
     coin_choice = models.StringField(choices=['fair', 'biased'])
     chosen_coin = models.StringField()
+    fair_coin_value = models.CurrencyField()
+    biased_coin_value = models.CurrencyField()
 
     # Player's guesses for the outcome of each coin
     fair_outcome = models.StringField(
@@ -66,6 +68,14 @@ class Player(BasePlayer):
             self.chosen_coin_result = self.fair_coin_result
         elif self.coin_choice == 'biased':
             self.chosen_coin_result = self.biased_coin_result
+        self.fair_coin_value = cu(random.choice([1, 2]))
+        self.biased_coin_value = cu(random.choice([1, 2]))
+
+        # Store the result of the chosen coin
+        if self.coin_choice == 'fair':
+            self.chosen_coin_result = self.fair_coin_result
+        elif self.coin_choice == 'biased':
+            self.chosen_coin_result = self.biased_coin_result
 
         # Combine the coin outcomes into a permutation result
         self.coin_permutation_result = f"{self.fair_coin_result}{self.biased_coin_result}"
@@ -78,18 +88,12 @@ class Player(BasePlayer):
             print(f"Coin permutation result: {self.coin_permutation_result}")
 
     def calculate_winnings(self):
-        """
-        Calculate the player's winnings based on their guesses and the coin results.
-        Only updates total_winnings if it's a real round.
-        """
         real_round_number = self.round_number - C.NUM_INTRO_PAGES - C.PRACTICE_ROUNDS
         if real_round_number > 0:
-            # Check if the player guessed both coin outcomes correctly
             if self.fair_outcome == self.fair_coin_result and self.biased_outcome == self.biased_coin_result:
-                round_winnings = cu(2)
+                round_winnings = self.fair_coin_value + self.biased_coin_value
             else:
                 round_winnings = cu(0)
-            # Add this round's winnings to total_winnings
             previous_total = self.in_round(self.round_number - 1).total_winnings if self.round_number > 1 else cu(0)
             self.total_winnings = previous_total + round_winnings
         else:
