@@ -5,6 +5,23 @@ import random
 P_FAIR = 0.5
 P_BIASED = 0.95  # Probability of heads for the biased coin
 
+# Introduction Pages
+class Introduction(Page):
+    def is_displayed(self):
+        return self.round_number == 1
+
+class Introduction1point5(Page):
+    def is_displayed(self):
+        return self.round_number == 2
+
+class Introduction1point6(Page):
+    def is_displayed(self):
+        return self.round_number == 3
+
+class Introduction2(Page):
+    def is_displayed(self):
+        return self.round_number == 4
+
 # Comprehension questions
 
 class CompQuestion1(Page):
@@ -32,22 +49,6 @@ class CompQuestion3(Page):
         # Set the flag after the last comprehension question
         self.participant.vars['comp_questions_shown'] = True
 
-# Introduction Pages
-class Introduction(Page):
-    def is_displayed(self):
-        return self.round_number == 1
-
-class Introduction1point5(Page):
-    def is_displayed(self):
-        return self.round_number == 2
-
-class Introduction1point6(Page):
-    def is_displayed(self):
-        return self.round_number == 3
-
-class Introduction2(Page):
-    def is_displayed(self):
-        return self.round_number == 4
 
 # Practice Rounds
 class PracticeChooseCoin(Page):
