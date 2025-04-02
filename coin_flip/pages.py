@@ -9,24 +9,28 @@ P_BIASED = 0.95  # Probability of heads for the biased coin
 
 class CompQuestion1(Page):
     template_name = 'coin_flip/CompQuestion.html'
-
+    
     def is_displayed(self):
-        # Add logic to determine when this page should be displayed
-        return True  # Update this condition as needed
+        # Display only if comprehension questions haven't been shown yet
+        return not self.participant.vars.get('comp_questions_shown', False)
 
 class CompQuestion2(Page):
     template_name = 'coin_flip/CompQuestion.html'
-
+    
     def is_displayed(self):
-        # Add logic to determine when this page should be displayed
-        return True  # Update this condition as needed
+        # Display only if comprehension questions haven't been shown yet
+        return not self.participant.vars.get('comp_questions_shown', False)
 
 class CompQuestion3(Page):
     template_name = 'coin_flip/CompQuestion.html'
-
+    
     def is_displayed(self):
-        # Add logic to determine when this page should be displayed
-        return True  # Update this condition as needed
+        # Display only if comprehension questions haven't been shown yet
+        return not self.participant.vars.get('comp_questions_shown', False)
+    
+    def before_next_page(self):
+        # Set the flag after the last comprehension question
+        self.participant.vars['comp_questions_shown'] = True
 
 # Introduction Pages
 class Introduction(Page):
@@ -222,7 +226,7 @@ page_sequence = [
     Introduction1point5,
     Introduction1point6,
     Introduction2,
-    # Coprehension questions
+    # Comprehension questions
     CompQuestion1,
     CompQuestion2,
     CompQuestion3,
