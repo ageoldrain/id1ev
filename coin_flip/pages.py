@@ -5,6 +5,15 @@ import random
 P_FAIR = 0.5
 P_BIASED = 0.95  # Probability of heads for the biased coin
 
+class CompQuestion1(Page):
+    template_name = 'coin_flip/CompQuestion1.html'
+    
+class CompQuestion2(Page):
+    template_name = 'coin_flip/CompQuestion2.html'
+
+class CompQuestion3(Page):
+    template_name = 'coin_flip/CompQuestion3.html'
+
 # Introduction Pages
 class Introduction(Page):
     def is_displayed(self):
