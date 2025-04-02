@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback</title>
+    <style>
+        .correct { color: green; }
+        .incorrect { color: red; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="{{ result_class }}">{{ result_message }}</h1>
+        {% if result_class == "incorrect" %}
+            <p>Feedback: You need to review the material again.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
