@@ -20,28 +20,31 @@ class Introduction1point6(Page):
 
 class Introduction2(Page):
     template_name = 'coin_flip/Instructions2.html'
-    
+
     def is_displayed(self):
         return self.round_number == 4
+
+    def before_next_page(self):
+        self.participant.vars['intro_completed'] = True
 
 # Comprehension questions
 class CompQuestion1(Page):
     template_name = 'coin_flip/CompQuestion.html'
     
     def is_displayed(self):
-        return not self.participant.vars.get('comp_questions_shown', False)
+        return self.participant.vars.get('intro_completed', False) and not self.participant.vars.get('comp_questions_shown', False)
 
 class CompQuestion2(Page):
     template_name = 'coin_flip/CompQuestion.html'
     
     def is_displayed(self):
-        return not self.participant.vars.get('comp_questions_shown', False)
+        return self.participant.vars.get('intro_completed', False) and not self.participant.vars.get('comp_questions_shown', False)
 
 class CompQuestion3(Page):
     template_name = 'coin_flip/CompQuestion.html'
     
     def is_displayed(self):
-        return not self.participant.vars.get('comp_questions_shown', False)
+        return self.participant.vars.get('intro_completed', False) and not self.participant.vars.get('comp_questions_shown', False)
     
     def before_next_page(self):
         self.participant.vars['comp_questions_shown'] = True
