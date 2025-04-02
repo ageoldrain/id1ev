@@ -1,13 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Multiple Choice Question 2</title>
+    <title>Multiple Choice Question</title>
 </head>
 <body>
     <div class="container">
-        <h1>Placeholder text for the secodn quetion</h1>
-        <form action="Feedback2.html" method="post">
+        <h1>Placeholder text for the second question</h1>
+        <form action="Feedback1.html" method="post">
             <p>What is your choice?</p>
             <input type="radio" id="option1" name="choice" value="option1">
             <label for="option1">Option 1</label><br>
@@ -22,3 +25,4 @@
     </div>
 </body>
 </html>
+{% endblock %}
