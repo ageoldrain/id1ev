@@ -208,6 +208,10 @@ page_sequence = [
     Introduction1point5,
     Introduction1point6,
     Introduction2,
+    # Coprehension questions
+    CompQuestion1,
+    CompQuestion2,
+    CompQuestion3,
     # Practice rounds
     PracticeChooseCoin,
     PracticeRevealCoinOutcome,
