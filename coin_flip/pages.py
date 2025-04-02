@@ -19,36 +19,32 @@ class Introduction1point6(Page):
         return self.round_number == 3
 
 class Introduction2(Page):
+    template_name = 'coin_flip/Instructions2.html'
+    
     def is_displayed(self):
         return self.round_number == 4
 
 # Comprehension questions
-
 class CompQuestion1(Page):
     template_name = 'coin_flip/CompQuestion.html'
     
     def is_displayed(self):
-        # Display only if comprehension questions haven't been shown yet
         return not self.participant.vars.get('comp_questions_shown', False)
 
 class CompQuestion2(Page):
     template_name = 'coin_flip/CompQuestion.html'
     
     def is_displayed(self):
-        # Display only if comprehension questions haven't been shown yet
         return not self.participant.vars.get('comp_questions_shown', False)
 
 class CompQuestion3(Page):
     template_name = 'coin_flip/CompQuestion.html'
     
     def is_displayed(self):
-        # Display only if comprehension questions haven't been shown yet
         return not self.participant.vars.get('comp_questions_shown', False)
     
     def before_next_page(self):
-        # Set the flag after the last comprehension question
         self.participant.vars['comp_questions_shown'] = True
-
 
 # Practice Rounds
 class PracticeChooseCoin(Page):
@@ -59,7 +55,6 @@ class PracticeChooseCoin(Page):
     def vars_for_template(self):
         coins = [('fair', 'Fair'), ('biased', 'Biased')]
         random.shuffle(coins)
-        # Save the order of coins to the player model
         self.participant.vars['coin_order'] = coins
         self.player.coin_order = ','.join([coin[0] for coin in coins])
         practice_round_number = self.round_number - C.NUM_INTRO_PAGES
@@ -73,8 +68,6 @@ class PracticeChooseCoin(Page):
 
     def before_next_page(self):
         self.player.chosen_coin = self.player.coin_choice
-        # Flip the coins after the player makes a choice
-        # Since it's a practice round, we flip the coins but won't affect total_winnings
         self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
 
     def is_displayed(self):
@@ -93,7 +86,7 @@ class PracticeRevealCoinOutcome(Page):
         }
 
     def is_displayed(self):
-        return C.NUM_INTRO_PAGES < self.round_number <= C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
+        return C.NUM_INTRO_PAGES < self.round_number <= C.PRACTICE_ROUNDS + C.NUM_INTRO_PAGES
 
 class PracticeChoosePermutation(Page):
     form_model = 'player'
@@ -117,11 +110,10 @@ class PracticeChoosePermutation(Page):
     def before_next_page(self):
         coins = self.participant.vars['coin_order']
         outcomes = [getattr(self.player, f"{coin[0]}_outcome") for coin in coins]
-        # Save permutation choice to player model
         self.player.coin_permutation_choice = ''.join(outcomes)
 
     def is_displayed(self):
-        return C.NUM_INTRO_PAGES < self.round_number <= C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
+        return C.NUM_INTRO_PAGES < self.round_number <= C.PRACTICE_ROUNDS + C.NUM_INTRO_PAGES
 
 # Real Rounds
 class RoundInfo(Page):
@@ -145,7 +137,6 @@ class ChooseCoin(Page):
     def vars_for_template(self):
         coins = [('fair', 'Fair'), ('biased', 'Biased')]
         random.shuffle(coins)
-        # Save the order of coins to the player model
         self.participant.vars['coin_order'] = coins
         self.player.coin_order = ','.join([coin[0] for coin in coins])
 
@@ -160,7 +151,6 @@ class ChooseCoin(Page):
 
     def before_next_page(self):
         self.player.chosen_coin = self.player.coin_choice
-        # Flip the coins after the player makes a choice
         self.player.flip_chosen_coin(p_fair=P_FAIR, p_biased=P_BIASED)
 
     def is_displayed(self):
@@ -203,16 +193,14 @@ class ChoosePermutation(Page):
     def before_next_page(self):
         coins = self.participant.vars['coin_order']
         outcomes = [getattr(self.player, f"{coin[0]}_outcome") for coin in coins]
-        # Save permutation choice to player model
         self.player.coin_permutation_choice = ''.join(outcomes)
-        self.player.calculate_winnings()  # Call without parameters
+        self.player.calculate_winnings()
 
     def is_displayed(self):
         return self.round_number > C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
 
 class Results(Page):
     def vars_for_template(self):
-        # Get the player's total winnings
         total_winnings = self.player.total_winnings
         return {
             'winnings': total_winnings
