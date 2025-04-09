@@ -49,6 +49,16 @@ class CompQuestion3(Page):
     def before_next_page(self):
         self.participant.vars['comp_questions_shown'] = True
 
+# Add these classes for each feedback page
+class Feedback1(Page):
+    template_name = 'coin_flip/Feedback1.html'
+
+class Feedback2(Page):
+    template_name = 'coin_flip/Feedback2.html'
+
+class Feedback3(Page):
+    template_name = 'coin_flip/Feedback3.html'
+
 # Practice Rounds
 class PracticeChooseCoin(Page):
     form_model = 'player'
