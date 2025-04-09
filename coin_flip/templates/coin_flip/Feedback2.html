@@ -1,19 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Feedback</title>
-    <style>
-        .correct { color: green; }
-        .incorrect { color: red; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1 class="{{ result_class }}">{{ result_message }}</h1>
-        {% if result_class == "incorrect" %}
-            <p>Feedback: You need to review the material again.</p>
-        {% endif %}
-    </div>
+{% extends 'coin_flip/base.html' %}
+
+{% block title %}Feedback2{% endblock %}
+
+{% block content %}
+<script>
+    function displayFeedback() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const answer = urlParams.get('answer');
+        
+        if (answer === 'true') {
+            document.getElementById('feedback').innerHTML = "No, that is unfortunately not correct. The biased coin is equally likely to be biased heads or tails.";
+        } else if (answer === 'false') {
+            document.getElementById('feedback').innerHTML = "Correct! The biased coin is equally likely to be biased heads or tails.";
+        } else {
+            document.getElementById('feedback').innerHTML = "Please select an answer.";
+        }
+    }
+</script>
+
+<body onload="displayFeedback()">
+    <p id="feedback"></p>
+    <form action="{% url 'next_page_url' %}" method="get">
+        <button type="submit">Next</button>
+    </form>
 </body>
-</html>
+{% endblock %}
