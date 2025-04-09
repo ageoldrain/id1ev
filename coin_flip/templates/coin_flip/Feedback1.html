@@ -20,8 +20,6 @@
 
 <body onload="displayFeedback()">
     <p id="feedback"></p>
-    <form action="{% url 'next_page_url' %}" method="get">
-        <button type="submit">Next</button>
-    </form>
+    {{ next_button }}
 </body>
 {% endblock %}
