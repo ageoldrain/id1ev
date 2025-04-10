@@ -29,19 +29,19 @@ class Introduction2(Page):
 
 # Comprehension questions
 class CompQuestion1(Page):
-    template_name = 'coin_flip/CompQuestion1.html'
+
     
     def is_displayed(self):
         return self.participant.vars.get('intro_completed', False) and not self.participant.vars.get('comp_questions_shown', False)
 
 class CompQuestion2(Page):
-    template_name = 'coin_flip/CompQuestion2.html'
+
     
     def is_displayed(self):
         return self.participant.vars.get('intro_completed', False) and not self.participant.vars.get('comp_questions_shown', False)
 
 class CompQuestion3(Page):
-    template_name = 'coin_flip/CompQuestion3.html'
+
     
     def is_displayed(self):
         return self.participant.vars.get('intro_completed', False) and not self.participant.vars.get('comp_questions_shown', False)
