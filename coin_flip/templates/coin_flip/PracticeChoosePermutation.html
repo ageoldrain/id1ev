@@ -9,6 +9,14 @@
         <p class="text-center">In this round the fair coin is worth <strong>{{ fair_coin_value }}</strong> and the biased coin is worth <strong>{{ biased_coin_value }}</strong></p>
     {% endif %}
 
+    <div class="alert alert-info text-center my-4" role="alert">
+    <strong>You must guess both coins correctly to be reimbursed for this round.</strong><br>
+    In this round, the potential reimbursement is 
+    <strong id="fair-coin-value">{{ fair_coin_value }}</strong> for the fair coin plus 
+    <strong id="biased-coin-value">{{ biased_coin_value }}</strong> for the biased coin, 
+    for a total of <strong id="total-reimbursement">...</strong>.
+</div>
+
     <form method="post">
         <div class="d-flex justify-content-center mb-3">
             {% for coin in coins %}
