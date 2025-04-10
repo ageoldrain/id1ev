@@ -6,19 +6,31 @@
     {% if is_practice_round %}
         <h2 class="text-center my-4" style="color: red;">PRACTICE ROUND {{ practice_round_number }}</h2>
         <h3 class="text-center my-4">Please guess the outcome of both coins for this practice round:</h3>
-        <p class="text-center" style="font-size: smaller;">In this round the fair coin is worth {{ fair_coin_value }} and the biased coin is worth {{ biased_coin_value }}</p>
+        <p class="text-center" style="font-size: smaller;">
+            In this round the fair coin is worth {{ fair_coin_value }} and the biased coin is worth {{ biased_coin_value }}
+        </p>
     {% else %}
         <h2 class="text-center my-4">Round {{ real_round_number }}</h2>
         <h3 class="text-center my-4">Please guess the outcome of both coins for this round:</h3>
-        <p class="text-center" style="font-size: smaller;">In this round the fair coin is worth <strong>{{ fair_coin_value }}</strong> and the biased coin is worth <strong>{{ biased_coin_value }}</strong></p>
+        <p class="text-center" style="font-size: smaller;">
+            In this round the fair coin is worth <strong>{{ fair_coin_value }}</strong> and the biased coin is worth <strong>{{ biased_coin_value }}</strong>.
+        </p>
     {% endif %}
+
+    <!-- Reimbursement Information Box -->
+    <div class="alert alert-info text-center my-4" role="alert">
+        <strong>You must guess both coins correctly to be reimbursed for this round.</strong><br>
+        In this round, the potential reimbursement is <strong>{{ fair_coin_value }}</strong> for the fair coin plus <strong>{{ biased_coin_value }}</strong> for the biased coin, 
+        for a total of <strong>{{ fair_coin_value|add:biased_coin_value }}</strong>.
+    </div>
 
     <form method="post">
         <div class="d-flex justify-content-center mb-3">
             {% for coin in coins %}
                 <div class="mx-4 text-center">
                     <h5>Outcome of the {{ coin.1 }} Coin</h5>
-                    <p class="text-center" style="font-size: smaller;">Value=
+                    <p class="text-center" style="font-size: smaller;">
+                        Value=
                         {% if coin.0 == 'fair' %}
                             {{ fair_coin_value }}
                         {% else %}
@@ -61,11 +73,11 @@
         The experiment proceeds in rounds. In each round, two coins will be flipped - a fair one (with equal probabilities of landing heads or tails), and a biased one (with a 95 out of 100 chance of landing heads).
     </p>
     <p>
-        Each round has two questions. First, you will be given the option to <b>find out the outcome of one of the two coins</b>. Once you choose the coin, the outcome will be revealed to you on the next screen.
+        Each round has two questions. First, you will be given the option to <b>find out the outcome of one of the two coins</b>. Once you choose the coin, the outcome will be revealed to you on the next page.
         After that, you will be asked to guess the outcome of <b>both</b> coins.
     </p>
     <p>
-        Each coin is worth either $1 or $2, chosen randomly each round. If you guess correctly in the second question, you will receive the sum of the values of both coins. If not, you will receive $0. You will not see how much you earned until the end of the experiment.
+        Each coin is worth either $1 or $2, chosen randomly each round. If you guess correctly in the second question, you will receive the sum of the values of both coins. If not, you will receive no reimbursement for that round.
     </p>
     <p>
         This process will continue for 10 rounds. The experiment will end after you complete all 10 rounds.
