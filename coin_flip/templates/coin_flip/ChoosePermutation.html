@@ -23,7 +23,7 @@
         In this round, the potential reimbursement is 
         <strong id="fair-coin-value">{{ fair_coin_value }}</strong> for the fair coin plus 
         <strong id="biased-coin-value">{{ biased_coin_value }}</strong> for the biased coin, 
-        for a total of <strong id="total-reimbursement"></strong>.
+        for a total of <strong id="total-reimbursement">...</strong>.
     </div>
 
     <form method="post">
@@ -134,11 +134,24 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Calculate total reimbursement
-        const fairValue = parseFloat(document.getElementById('fair-coin-value').textContent);
-        const biasedValue = parseFloat(document.getElementById('biased-coin-value').textContent);
+        // Parse fair coin and biased coin values
+        const fairValueElement = document.getElementById('fair-coin-value');
+        const biasedValueElement = document.getElementById('biased-coin-value');
+        const totalReimbursementElement = document.getElementById('total-reimbursement');
+
+        // Safely parse numeric values from text content
+        const fairValue = parseFloat(fairValueElement ? fairValueElement.textContent.trim() : 0);
+        const biasedValue = parseFloat(biasedValueElement ? biasedValueElement.textContent.trim() : 0);
+
+        // Compute total reimbursement
         const totalReimbursement = fairValue + biasedValue;
-        document.getElementById('total-reimbursement').textContent = totalReimbursement.toFixed(2);
+
+        // Update the total reimbursement element
+        if (!isNaN(totalReimbursement)) {
+            totalReimbursementElement.textContent = totalReimbursement.toFixed(2);
+        } else {
+            totalReimbursementElement.textContent = 'Error calculating total';
+        }
     });
 
     // Accordion functionality for instructions
