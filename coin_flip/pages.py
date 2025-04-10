@@ -229,12 +229,12 @@ page_sequence = [
     Introduction1point6,
     Introduction2,
     # Comprehension questions
-    CompQuestion1,
-    Feedback1,
-    CompQuestion2,
-    Feedback2,
-    CompQuestion3,
-    Feedback3,
+    #CompQuestion1,
+    #Feedback1,
+    #CompQuestion2,
+    #Feedback2,
+    #CompQuestion3,
+    #Feedback3,
     # Practice rounds
     PracticeChooseCoin,
     PracticeRevealCoinOutcome,
