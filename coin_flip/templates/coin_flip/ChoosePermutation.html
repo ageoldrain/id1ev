@@ -139,18 +139,24 @@
         const biasedValueElement = document.getElementById('biased-coin-value');
         const totalReimbursementElement = document.getElementById('total-reimbursement');
 
-        // Safely parse numeric values from text content
-        const fairValue = parseFloat(fairValueElement ? fairValueElement.textContent.trim() : 0);
-        const biasedValue = parseFloat(biasedValueElement ? biasedValueElement.textContent.trim() : 0);
+        // Safely extract and parse numeric values, removing the "$" symbol
+        const fairValue = fairValueElement ? parseFloat(fairValueElement.textContent.trim().replace('$', '')) : NaN;
+        const biasedValue = biasedValueElement ? parseFloat(biasedValueElement.textContent.trim().replace('$', '')) : NaN;
 
-        // Compute total reimbursement
-        const totalReimbursement = fairValue + biasedValue;
+        console.log('Fair Coin Value:', fairValue);
+        console.log('Biased Coin Value:', biasedValue);
 
-        // Update the total reimbursement element
-        if (!isNaN(totalReimbursement)) {
-            totalReimbursementElement.textContent = totalReimbursement.toFixed(2);
+        // Check if the values are valid numbers
+        if (!isNaN(fairValue) && !isNaN(biasedValue)) {
+            const totalReimbursement = fairValue + biasedValue;
+            totalReimbursementElement.textContent = `$${totalReimbursement.toFixed(2)}`;
         } else {
+            // Display error if the values are invalid
             totalReimbursementElement.textContent = 'Error calculating total';
+            console.error('Invalid values for fair_coin_value or biased_coin_value:', {
+                fair_coin_value: fairValue,
+                biased_coin_value: biasedValue
+            });
         }
     });
 
