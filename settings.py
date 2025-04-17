@@ -1,6 +1,13 @@
 
+
+import dj_database_url
 from os import environ
 
+DATABASES = {
+    'default': dj_database_url.config(
+        default=environ.get('DATABASE_URL')
+    )
+}
 
 SESSION_CONFIGS = [
     dict(
@@ -61,4 +68,10 @@ ROOT_URLCONF = 'csrfprotect.urls'
 
 SECRET_KEY = '8093711393089'
 
-INSTALLED_APPS = ['otree']
+INSTALLED_APPS = ['otree',
+                     'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles']
