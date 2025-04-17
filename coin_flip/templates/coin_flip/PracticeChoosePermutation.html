@@ -19,31 +19,31 @@
     </div>
 
     <form method="post">
-        <div class="d-flex justify-content-center mb-3">
-            {% for coin in coins %}
-                <div class="mx-4 text-center">
-                    <h5>Outcome of the {{ coin.1 }} Coin</h5>
-                    <p class="text-center" style="font-size: smaller;">
-                        Value=
-                        {% if coin.0 == 'fair' %}
-                            {{ fair_coin_value }}
-                        {% else %}
-                            {{ biased_coin_value }}
-                        {% endif %}
-                    </p>
-                    {% for choice in ['H', 'T'] %}
-                        <label class="btn btn-primary mx-2">
-                            <input type="radio" name="{{ coin.0 }}_outcome" value="{{ choice }}" required>
-                            {% if choice == 'H' %}
-                                Heads
-                            {% else %}
-                                Tails
-                            {% endif %}
-                        </label>
-                    {% endfor %}
-                </div>
+<div class="d-flex justify-content-center mb-5"> <!-- Increased margin-bottom for more spacing -->
+    {% for coin in coins %}
+        <div class="mx-5 text-center"> <!-- Increased margin-x for more spacing between coins -->
+            <h5>Outcome of the {{ coin.1 }} Coin</h5>
+            <p class="text-center" style="font-size: smaller;">
+                Value=
+                {% if coin.0 == 'fair' %}
+                    {{ fair_coin_value }}
+                {% else %}
+                    {{ biased_coin_value }}
+                {% endif %}
+            </p>
+            {% for choice in ['H', 'T'] %}
+                <label class="btn btn-primary mx-2">
+                    <input type="radio" name="{{ coin.0 }}_outcome" value="{{ choice }}" required>
+                    {% if choice == 'H' %}
+                        Heads
+                    {% else %}
+                        Tails
+                    {% endif %}
+                </label>
             {% endfor %}
         </div>
+    {% endfor %}
+</div>
 
         <!-- Display form errors if any -->
         {% for field in form %}
