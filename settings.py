@@ -67,5 +67,4 @@ INSTALLED_APPS = ['otree''
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'gettingstarted']
+    'django.contrib.staticfiles']
