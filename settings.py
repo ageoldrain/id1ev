@@ -3,10 +3,11 @@ from decouple import config
 import dj_database_url
 from os import environ
 
+from decouple import config
+import dj_database_url
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default=environ.get('DATABASE_URL')
-    )
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
 
 SESSION_CONFIGS = [
