@@ -18,3 +18,5 @@ uvicorn==0.13.4
 websockets==10.1
 WTForms==2.3.3
 WTForms-SQLAlchemy==0.2
+python-decouple==3.8
+dj-database-url==2.3.0
