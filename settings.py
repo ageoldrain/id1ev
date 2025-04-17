@@ -75,3 +75,5 @@ INSTALLED_APPS = ['otree',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles']
+    'django.contrib.staticfiles']
+
