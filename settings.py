@@ -1,6 +1,13 @@
 
+
+import dj_database_url
 from os import environ
 
+DATABASES = {
+    'default': dj_database_url.config(
+        default=environ.get('DATABASE_URL')
+    )
+}
 
 SESSION_CONFIGS = [
     dict(
