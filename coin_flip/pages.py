@@ -32,13 +32,9 @@ class CompQuestion1(Page):
     form_model = 'player'
     form_fields = ['compq1']
 
-    
     def is_displayed(self):
-        return self.participant.vars.get('intro_completed', False) and not self.participant.vars.get('comp_questions_shown', False)
-
-        def before_next_page(self):
-            # so it only ever shows once
-            self.participant.vars['comp_questions_shown'] = True
+        # only in the one round immediately after the 4 intro pages
+        return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
 
 class CompQuestion2(Page):
 
