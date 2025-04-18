@@ -31,6 +31,13 @@ class Player(BasePlayer):
     fair_coin_value = models.CurrencyField()
     biased_coin_value = models.CurrencyField()
 
+    # in coin_flip/models.py, inside class Player(BasePlayer):
+    compq1 = models.StringField(
+    choices=['True','False'], 
+    label="Your answer to question 1"
+    )
+
+
     # Player's guesses for the outcome of each coin
     fair_outcome = models.StringField(
         choices=['H', 'T'],
