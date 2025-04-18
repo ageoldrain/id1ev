@@ -1,19 +1,20 @@
 {% extends "coin_flip/base.html" %}
 
-{% block title %}Comprehension Question 1{% endblock %}
-
-{% block question_text %}
-In each round there are two coins that you have to guess. To get paid for that round, you have to guess only one of the coins. 
-{% endblock %}
-
-{% block form_action %}
-Feedback1.html
-{% endblock %}
+{% block title %}Comprehension Question 1{% endblock %}
 
 {% block content %}
-    <input type="radio" id="option1" name="choice" value="option1">
+  <p>
+    In each round there are two coins that you have to guess.  
+    To get paid for that round, you have to guess only one of the coins.
+  </p>
+
+  <form method="post">
+    <input type="radio" id="option1" name="compq1" value="True">
     <label for="option1">True</label><br>
-    <input type="radio" id="option2" name="choice" value="option2">
+
+    <input type="radio" id="option2" name="compq1" value="False">
     <label for="option2">False</label><br>
-    <button type="submit">Submit</button>
+
+    {{ next_button }}
+  </form>
 {% endblock %}
