@@ -1,2 +1,2 @@
-# settings.py (root of your project)
+# settings.py  ← at repo root, next to manage.py
 from id1ev.settings import *
