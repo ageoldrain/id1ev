@@ -1,0 +1,25 @@
+{% extends 'coin_flip/base.html' %}
+
+{% block title %}Feedback2{% endblock %}
+
+{% block content %}
+<script>
+    function displayFeedback() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const answer = urlParams.get('answer');
+        
+        if (answer === 'true') {
+            document.getElementById('feedback').innerHTML = "No, that is unfortunately not correct. The biased coin is equally likely to be biased heads or tails.";
+        } else if (answer === 'false') {
+            document.getElementById('feedback').innerHTML = "Correct! The biased coin is equally likely to be biased heads or tails.";
+        } else {
+            document.getElementById('feedback').innerHTML = "Please select an answer.";
+        }
+    }
+</script>
+
+<body onload="displayFeedback()">
+    <p id="feedback"></p>
+    {{ next_button }}
+</body>
+{% endblock %}

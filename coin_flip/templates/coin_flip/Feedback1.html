@@ -1,0 +1,23 @@
+{% extends 'coin_flip/base.html' %}
+
+{% block title %}Feedback1{% endblock %}
+
+{% block content %}
+<script>
+    function displayFeedback() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const answer = urlParams.get('answer');
+        
+        if (answer === 'true') {
+            document.getElementById('feedback').innerHTML = "Correct! You need to guess <b>both</b> coins to be reimbursed for any round.";
+        } else if (answer === 'false') {
+            document.getElementById('feedback').innerHTML = "No, that is unfortunately not correct. You need to guess <b>both</b> coins to be reimbursed for any round.";
+        }
+    }
+</script>
+
+<body onload="displayFeedback()">
+    <p id="feedback"></p>
+    {{ next_button }}
+</body>
+{% endblock %}

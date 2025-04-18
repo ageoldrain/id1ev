@@ -1,0 +1,14 @@
+{% extends 'coin_flip/base.html' %}
+
+{% block title %}Comprehension Question 3{% endblock %}
+
+{% block content %}
+<form action="Feedback3.html" method="get">
+    <p>Suppose that you choose to reveal one of the coins, and it is revealed to be "Tails." You do not have to enter this information in the next screen, when you are asked to guess both coins.</p>
+    <input type="radio" id="option1" name="answer" value="true">
+    <label for="option1">True</label><br>
+    <input type="radio" id="option2" name="answer" value="false">
+    <label for="option2">False</label><br><br>
+    <button type="submit">Submit</button>
+</form>
+{% endblock %}

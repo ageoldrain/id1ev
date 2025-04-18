@@ -1,0 +1,16 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block content %}
+<div class="container">
+    {% if is_practice_round %}
+        <h2 class="text-center my-4" style="color: red;">Beginning PRACTICE ROUND {{ practice_round_number }}</h2>
+    {% else %}
+        <h2 class="text-center my-4">Beginning Round {{ real_round_number }}</h2>
+    {% endif %}
+
+    <div class="d-flex justify-content-center">
+        {% next_button %}
+    </div>
+</div>
+{% endblock %}

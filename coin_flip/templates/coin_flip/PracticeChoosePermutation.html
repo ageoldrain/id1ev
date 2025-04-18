@@ -1,0 +1,169 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center my-4" style="color: red;">PRACTICE ROUND {{ practice_round_number }}</h2>
+    <h3 class="text-center my-4">Please guess the outcome of both coins for this practice round:</h3>
+    <p class="text-center" style="font-size: 18px;">
+        In this round the fair coin is worth {{ fair_coin_value }} and the biased coin is worth {{ biased_coin_value }}
+    </p>
+
+    <!-- Reimbursement Information Box -->
+    <div class="alert alert-info text-center my-4" role="alert">
+        <strong>You must guess both coins correctly to be reimbursed for this round.</strong><br>
+        In this round, the potential reimbursement is 
+        <strong id="fair-coin-value">{{ fair_coin_value }}</strong> for the fair coin plus 
+        <strong id="biased-coin-value">{{ biased_coin_value }}</strong> for the biased coin, 
+        for a total of <strong id="total-reimbursement">...</strong>.
+    </div>
+
+    <form method="post">
+<div class="d-flex justify-content-center mb-5"> <!-- Increased margin-bottom for more spacing -->
+    {% for coin in coins %}
+        <div class="mx-5 text-center"> <!-- Increased margin-x for more spacing between coins -->
+            <h5>What is the outcome of the {{ coin.1 }} Coin</h5>
+            <p class="text-center" style="font-size: smaller;">
+                Value=
+                {% if coin.0 == 'fair' %}
+                    {{ fair_coin_value }}
+                {% else %}
+                    {{ biased_coin_value }}
+                {% endif %}
+            </p>
+            {% for choice in ['H', 'T'] %}
+                <label class="btn btn-primary mx-2">
+                    <input type="radio" name="{{ coin.0 }}_outcome" value="{{ choice }}" required>
+                    {% if choice == 'H' %}
+                        Heads
+                    {% else %}
+                        Tails
+                    {% endif %}
+                </label>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+
+        <!-- Display form errors if any -->
+        {% for field in form %}
+            {% if field.errors %}
+                <div class="alert alert-danger text-center">
+                    {{ field.errors }}
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <div class="d-flex justify-content-center">
+            {% next_button %}
+        </div>
+    </form>
+</div>
+
+<!-- Review Instructions Section -->
+<div class="accordion">Review Instructions</div>
+<div class="panel">
+    <p>
+        The experiment proceeds in rounds. In each round, two coins will be flipped - a fair one (with equal probabilities of landing heads or tails), and a biased one (with a 95 out of 100 chance of landing heads).
+    </p>
+    <p>
+        Each round has two questions. First, you will be given the option to <b>find out the outcome of one of the two coins</b>. Once you choose the coin, the outcome will be revealed to you on the next page.
+        After that, you will be asked to guess the outcome of <b>both</b> coins.
+    </p>
+    <p>
+        Each coin is worth either $1 or $2, chosen randomly each round. If you guess correctly in the second question, you will receive the sum of the values of both coins. If not, you will receive no reimbursement for that round.
+    </p>
+    <p>
+        This process will continue for 10 rounds. The experiment will end after you complete all 10 rounds.
+    </p>
+</div>
+
+<style>
+    .coin-label {
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    .coin-input {
+        display: none;
+    }
+    .coin-input:checked + .coin-image {
+        border: 4px solid gold;
+        border-radius: 10px;
+    }
+    .coin-label:hover .coin-image {
+        transform: scale(1.05);
+    }
+    .coin-image {
+        max-width: 200px;
+        transition: border 0.2s, transform 0.2s;
+    }
+
+    .accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+        margin-top: 20px;
+    }
+
+    .active, .accordion:hover {
+        background-color: #ccc;
+    }
+
+    .panel {
+        padding: 0 18px;
+        display: none;
+        background-color: white;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the fair coin and biased coin elements
+        const fairValueElement = document.getElementById('fair-coin-value');
+        const biasedValueElement = document.getElementById('biased-coin-value');
+        const totalReimbursementElement = document.getElementById('total-reimbursement');
+
+        // Safely extract and parse numeric values, removing the "$" symbol
+        const fairValue = fairValueElement ? parseFloat(fairValueElement.textContent.trim().replace('$', '')) : NaN;
+        const biasedValue = biasedValueElement ? parseFloat(biasedValueElement.textContent.trim().replace('$', '')) : NaN;
+
+        console.log('Fair Coin Value:', fairValue);
+        console.log('Biased Coin Value:', biasedValue);
+
+        // Check if the values are valid numbers
+        if (!isNaN(fairValue) && !isNaN(biasedValue)) {
+            const totalReimbursement = fairValue + biasedValue;
+            totalReimbursementElement.textContent = `$${totalReimbursement.toFixed(2)}`;
+        } else {
+            // Display error if the values are invalid
+            totalReimbursementElement.textContent = 'Error calculating total';
+            console.error('Invalid values for fair_coin_value or biased_coin_value:', {
+                fair_coin_value: fairValue,
+                biased_coin_value: biasedValue
+            });
+        }
+    });
+
+    // Accordion functionality for instructions
+    var acc = document.getElementsByClassName("accordion");
+    for (var i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        });
+    }
+</script>
+{% endblock %}
