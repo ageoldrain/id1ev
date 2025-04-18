@@ -19,4 +19,4 @@ __pycache__/
 *.swo
 
 # SSH keys or sensitive files
-.ssh/
+.ssh/.DS_Store
