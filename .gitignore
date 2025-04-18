@@ -22,3 +22,6 @@ __pycache__/
 .ssh/.DS_Store
 .DS_Store
 .DS_Store
+coin_flip/.DS_Store
+db.sqlite3
+staticfiles/
