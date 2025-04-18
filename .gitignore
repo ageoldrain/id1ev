@@ -21,3 +21,4 @@ __pycache__/
 # SSH keys or sensitive files
 .ssh/.DS_Store
 .DS_Store
+.DS_Store
