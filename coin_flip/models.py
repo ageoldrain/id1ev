@@ -8,7 +8,7 @@ Curiosity and Information Demand
 debug = False
 
 class C(BaseConstants):
-    NAME_IN_URL = 'coin_flip'
+    name_in_url = 'coin_flip'
     PLAYERS_PER_GROUP = None
     NUM_INTRO_PAGES = 4  # Number of introduction pages
     PRACTICE_ROUNDS = 3  # Number of practice rounds
