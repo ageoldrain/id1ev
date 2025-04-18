@@ -1,9 +1,11 @@
-# id1ev/id1ev/urls.py
 from django.contrib import admin
 from django.urls import path, include
 import otree.urls
 
 urlpatterns = [
+    # Django admin
     path('admin/', admin.site.urls),
-    path('', include(otree.urls)),   # this hands off to oTree’s built‑in URL router
+
+    # Expose all oTree apps (as defined in SESSION_CONFIGS) at the root URL
+    path('', include(otree.urls)),
 ]
