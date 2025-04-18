@@ -78,6 +78,7 @@ Here are some oTree games.
 # ──────────────────────────────────────────────────────────────────────────────
 INSTALLED_APPS = [
     'otree',
+    'coin_flip', 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
