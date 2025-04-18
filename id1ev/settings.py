@@ -21,6 +21,11 @@ DATABASES = {
     'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
 
+# after STATIC_ROOT / STATICFILES_STORAGE
+# tell oTree/Starlette exactly which static dirs to use:
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
+
+
 # ──────────────────────────────────────────────────────────────────────────────
 # oTree session configs
 # ──────────────────────────────────────────────────────────────────────────────
