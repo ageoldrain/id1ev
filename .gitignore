@@ -1,0 +1,22 @@
+# Virtual environment
+venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Environment variables
+.env
+
+# Backup files
+*.orig
+
+# IDE-specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# SSH keys or sensitive files
+.ssh/
