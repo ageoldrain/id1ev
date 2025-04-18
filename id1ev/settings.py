@@ -49,7 +49,7 @@ REAL_WORLD_CURRENCY_CODE = 'USD'
 USE_POINTS = False
 
 # ──────────────────────────────────────────────────────────────────────────────
-# ROOMS (participant labels)
+# ROOMS
 # ──────────────────────────────────────────────────────────────────────────────
 ROOMS = [
     dict(
@@ -86,24 +86,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
- # ──────────────────────────────────────────────────────────────────────────────
- # TEMPLATES (needed for Django admin)
- # ──────────────────────────────────────────────────────────────────────────────
- TEMPLATES = [
-     {
-         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],                     # or [os.path.join(BASE_DIR, 'templates')]
-        'APP_DIRS': True,               # looks for "templates/" in each app
-         'OPTIONS': {
-             'context_processors': [
-                 'django.template.context_processors.debug',
-                 'django.template.context_processors.request',
-                 'django.contrib.auth.context_processors.auth',
-                 'django.contrib.messages.context_processors.messages',
-             ],
-         },
-     },
- ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -113,6 +95,25 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+]
+
+# ──────────────────────────────────────────────────────────────────────────────
+# TEMPLATES (needed for Django admin)
+# ──────────────────────────────────────────────────────────────────────────────
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],      # add project‑level templates dir here if you have one
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
 ]
 
 ROOT_URLCONF = 'id1ev.urls'
