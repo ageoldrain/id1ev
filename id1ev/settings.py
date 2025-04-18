@@ -86,6 +86,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+ # ──────────────────────────────────────────────────────────────────────────────
+ # TEMPLATES (needed for Django admin)
+ # ──────────────────────────────────────────────────────────────────────────────
+ TEMPLATES = [
+     {
+         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],                     # or [os.path.join(BASE_DIR, 'templates')]
+        'APP_DIRS': True,               # looks for "templates/" in each app
+         'OPTIONS': {
+             'context_processors': [
+                 'django.template.context_processors.debug',
+                 'django.template.context_processors.request',
+                 'django.contrib.auth.context_processors.auth',
+                 'django.contrib.messages.context_processors.messages',
+             ],
+         },
+     },
+ ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
