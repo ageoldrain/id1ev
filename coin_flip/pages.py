@@ -36,6 +36,10 @@ class CompQuestion1(Page):
     def is_displayed(self):
         return self.participant.vars.get('intro_completed', False) and not self.participant.vars.get('comp_questions_shown', False)
 
+        def before_next_page(self):
+            # so it only ever shows once
+            self.participant.vars['comp_questions_shown'] = True
+
 class CompQuestion2(Page):
 
     
