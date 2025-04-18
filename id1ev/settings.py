@@ -21,11 +21,6 @@ DATABASES = {
     'default': dj_database_url.config(default=config('DATABASE_URL'))
 }
 
-# after STATIC_ROOT / STATICFILES_STORAGE
-# tell oTree/Starlette exactly which static dirs to use:
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
-
-
 # ──────────────────────────────────────────────────────────────────────────────
 # oTree session configs
 # ──────────────────────────────────────────────────────────────────────────────
@@ -83,7 +78,7 @@ Here are some oTree games.
 # ──────────────────────────────────────────────────────────────────────────────
 INSTALLED_APPS = [
     'otree',
-    'coin_flip', 
+    'coin_flip',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -94,7 +89,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',            # for serving static files on Heroku
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # for serving static files on Heroku
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
