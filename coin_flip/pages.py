@@ -29,6 +29,8 @@ class Introduction2(Page):
 
 # Comprehension questions
 class CompQuestion1(Page):
+    form_model = 'player'
+    form_fields = ['compq1']
 
     
     def is_displayed(self):
