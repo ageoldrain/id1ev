@@ -36,7 +36,7 @@ class Introduction2(Page):
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Comprehension Q1 + Feedback
+# Comprehension Q1 + Feedback1
 # ──────────────────────────────────────────────────────────────────────────────
 class CompQuestion1(Page):
     form_model = 'player'
@@ -47,6 +47,8 @@ class CompQuestion1(Page):
 
 
 class Feedback1(Page):
+    form_model = 'player'
+    form_fields = []  # no fields here
     template_name = 'coin_flip/Feedback1.html'
 
     def is_displayed(self):
@@ -54,7 +56,7 @@ class Feedback1(Page):
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Comprehension Q2 + Feedback
+# Comprehension Q2 + Feedback2
 # ──────────────────────────────────────────────────────────────────────────────
 class CompQuestion2(Page):
     form_model = 'player'
@@ -65,8 +67,9 @@ class CompQuestion2(Page):
 
 
 class Feedback2(Page):
+    form_model = 'player'
+    form_fields = []  # no fields here
     template_name = 'coin_flip/Feedback2.html'
-    form_fields = []                 # explicitly no fields
 
     def is_displayed(self):
         return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
@@ -85,10 +88,10 @@ class PracticeChooseCoin(Page):
         random.shuffle(coins)
         self.participant.vars['coin_order'] = coins
         self.player.coin_order = ','.join([coin[0] for coin in coins])
-        practice_round_number = self.round_number - C.NUM_INTRO_PAGES
+        pr = self.round_number - C.NUM_INTRO_PAGES
         return {
             'coins': coins,
-            'practice_round_number': practice_round_number,
+            'practice_round_number': pr,
             'is_practice_round': True,
             'fair_coin_value': self.player.fair_coin_value,
             'biased_coin_value': self.player.biased_coin_value,
@@ -106,11 +109,11 @@ class PracticeRevealCoinOutcome(Page):
     template_name = 'coin_flip/PracticeRevealCoinOutcome.html'
 
     def vars_for_template(self):
-        practice_round_number = self.round_number - C.NUM_INTRO_PAGES
+        pr = self.round_number - C.NUM_INTRO_PAGES
         return {
             'chosen_coin': self.player.chosen_coin.capitalize(),
             'chosen_coin_result': self.player.chosen_coin_result,
-            'practice_round_number': practice_round_number,
+            'practice_round_number': pr,
             'is_practice_round': True,
         }
 
@@ -128,10 +131,10 @@ class PracticeChoosePermutation(Page):
 
     def vars_for_template(self):
         coins = self.participant.vars['coin_order']
-        practice_round_number = self.round_number - C.NUM_INTRO_PAGES
+        pr = self.round_number - C.NUM_INTRO_PAGES
         return {
             'coins': coins,
-            'practice_round_number': practice_round_number,
+            'practice_round_number': pr,
             'is_practice_round': True,
             'fair_coin_value': self.player.fair_coin_value,
             'biased_coin_value': self.player.biased_coin_value,
@@ -153,9 +156,9 @@ class RoundInfo(Page):
     template_name = 'coin_flip/RoundInfo.html'
 
     def vars_for_template(self):
-        real_round_number = self.round_number - C.NUM_INTRO_PAGES - C.PRACTICE_ROUNDS
+        rr = self.round_number - C.NUM_INTRO_PAGES - C.PRACTICE_ROUNDS
         return {
-            'real_round_number': real_round_number,
+            'real_round_number': rr,
             'is_practice_round': False,
         }
 
@@ -173,10 +176,10 @@ class ChooseCoin(Page):
         random.shuffle(coins)
         self.participant.vars['coin_order'] = coins
         self.player.coin_order = ','.join([coin[0] for coin in coins])
-        real_round_number = self.round_number - C.NUM_INTRO_PAGES - C.PRACTICE_ROUNDS
+        rr = self.round_number - C.NUM_INTRO_PAGES - C.PRACTICE_ROUNDS
         return {
             'coins': coins,
-            'real_round_number': real_round_number,
+            'real_round_number': rr,
             'is_practice_round': False,
             'fair_coin_value': self.player.fair_coin_value,
             'biased_coin_value': self.player.biased_coin_value,
@@ -194,11 +197,11 @@ class RevealCoinOutcome(Page):
     template_name = 'coin_flip/RevealCoinOutcome.html'
 
     def vars_for_template(self):
-        real_round_number = self.round_number - C.NUM_INTRO_PAGES - C.PRACTICE_ROUNDS
+        rr = self.round_number - C.NUM_INTRO_PAGES - C.PRACTICE_ROUNDS
         return {
             'chosen_coin': self.player.chosen_coin.capitalize(),
             'chosen_coin_result': self.player.chosen_coin_result,
-            'real_round_number': real_round_number,
+            'real_round_number': rr,
             'is_practice_round': False,
         }
 
@@ -216,10 +219,10 @@ class ChoosePermutation(Page):
 
     def vars_for_template(self):
         coins = self.participant.vars['coin_order']
-        real_round_number = self.round_number - C.NUM_INTRO_PAGES - C.PRACTICE_ROUNDS
+        rr = self.round_number - C.NUM_INTRO_PAGES - C.PRACTICE_ROUNDS
         return {
             'coins': coins,
-            'real_round_number': real_round_number,
+            'real_round_number': rr,
             'is_practice_round': False,
             'fair_coin_value': self.player.fair_coin_value,
             'biased_coin_value': self.player.biased_coin_value,
@@ -248,21 +251,16 @@ page_sequence = [
     Introduction1point5,
     Introduction1point6,
     Introduction2,
-
     CompQuestion1,
     Feedback1,
-
     CompQuestion2,
     Feedback2,
-
     PracticeChooseCoin,
     PracticeRevealCoinOutcome,
     PracticeChoosePermutation,
-
     RoundInfo,
     ChooseCoin,
     RevealCoinOutcome,
     ChoosePermutation,
-
     Results,
 ]
