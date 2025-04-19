@@ -52,9 +52,14 @@ class CompQuestion3(Page):
         self.participant.vars['comp_questions_shown'] = True
 
 # Add these classes for each feedback page
-class Feedback1(Page):
-    template_name = 'coin_flip/Feedback1.html'
 
+ class Feedback1(Page):
+     template_name = 'coin_flip/Feedback1.html'
+
+     def is_displayed(self):
+         # only show this feedback once, in the first post‑intro round
+         return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
+         
 class Feedback2(Page):
     template_name = 'coin_flip/Feedback2.html'
 
