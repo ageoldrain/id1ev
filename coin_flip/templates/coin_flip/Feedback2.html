@@ -1,4 +1,3 @@
-{# coin_flip/templates/coin_flip/Feedback2.html #}
 {% extends "global/Page.html" %}
 {% load otree static %}
 
@@ -7,13 +6,13 @@
 {% block content %}
 <div class="container">
     <div class="text-center mb-4">
-        {% if player.compq2 == "True" %}
+        {% if player.compq2 == "False" %}
             <p class="lead">
-                Unfortunately that’s not correct. The biased coin is always biased heads.
+                Correct! The biased coin is always biased heads.
             </p>
         {% else %}
             <p class="lead">
-                Correct! The biased coin is always biased heads.
+                Unfortunately that’s not correct. The biased coin is always biased heads.
             </p>
         {% endif %}
     </div>
