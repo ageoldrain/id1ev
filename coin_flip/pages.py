@@ -76,6 +76,26 @@ class Feedback2(Page):
 
 
 # ──────────────────────────────────────────────────────────────────────────────
+# Comprehension Q3 + Feedback3
+# ──────────────────────────────────────────────────────────────────────────────
+class CompQuestion3(Page):
+    form_model = 'player'
+    form_fields = ['compq3']
+
+    def is_displayed(self):
+        return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
+
+
+class Feedback3(Page):
+    form_model = 'player'
+    form_fields = []
+    template_name = 'coin_flip/Feedback3.html'
+
+    def is_displayed(self):
+        return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 # Practice Rounds
 # ──────────────────────────────────────────────────────────────────────────────
 class PracticeChooseCoin(Page):
@@ -251,16 +271,26 @@ page_sequence = [
     Introduction1point5,
     Introduction1point6,
     Introduction2,
+
+    # Comprehension checks (all before practice)
     CompQuestion1,
     Feedback1,
     CompQuestion2,
     Feedback2,
+    CompQuestion3,
+    Feedback3,
+
+    # Practice rounds
     PracticeChooseCoin,
     PracticeRevealCoinOutcome,
     PracticeChoosePermutation,
+
+    # Real rounds
     RoundInfo,
     ChooseCoin,
     RevealCoinOutcome,
     ChoosePermutation,
+
+    # Final
     Results,
 ]
