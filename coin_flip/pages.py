@@ -1,22 +1,30 @@
-from otree.api import Page
-from .models import C, Player
+from otree.api import Page, WaitPage
 import random
 
-P_FAIR = 0.5
-P_BIASED = 0.95  # Probability of heads for the biased coin
+from .models import C, Player
 
+# probabilities for practice/real flips
+P_FAIR = 0.5
+P_BIASED = 0.95
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 # Introduction Pages
+# ──────────────────────────────────────────────────────────────────────────────
 class Introduction(Page):
     def is_displayed(self):
         return self.round_number == 1
+
 
 class Introduction1point5(Page):
     def is_displayed(self):
         return self.round_number == 2
 
+
 class Introduction1point6(Page):
     def is_displayed(self):
         return self.round_number == 3
+
 
 class Introduction2(Page):
     template_name = 'coin_flip/Instructions2.html'
@@ -27,31 +35,17 @@ class Introduction2(Page):
     def before_next_page(self):
         self.participant.vars['intro_completed'] = True
 
-# Comprehension questions
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Comprehension Question (only once)
+# ──────────────────────────────────────────────────────────────────────────────
 class CompQuestion1(Page):
     form_model = 'player'
     form_fields = ['compq1']
 
     def is_displayed(self):
+        # exactly once, immediately after the last intro page
         return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
-
-
-class CompQuestion2(Page):
-
-    
-    def is_displayed(self):
-        return self.participant.vars.get('intro_completed', False) and not self.participant.vars.get('comp_questions_shown', False)
-
-class CompQuestion3(Page):
-
-    
-    def is_displayed(self):
-        return self.participant.vars.get('intro_completed', False) and not self.participant.vars.get('comp_questions_shown', False)
-    
-    def before_next_page(self):
-        self.participant.vars['comp_questions_shown'] = True
-
-# Add these classes for each feedback page
 
 
 class Feedback1(Page):
@@ -59,14 +53,11 @@ class Feedback1(Page):
 
     def is_displayed(self):
         return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
-         
-class Feedback2(Page):
-    template_name = 'coin_flip/Feedback2.html'
 
-class Feedback3(Page):
-    template_name = 'coin_flip/Feedback3.html'
 
+# ──────────────────────────────────────────────────────────────────────────────
 # Practice Rounds
+# ──────────────────────────────────────────────────────────────────────────────
 class PracticeChooseCoin(Page):
     form_model = 'player'
     form_fields = ['coin_choice']
@@ -75,7 +66,9 @@ class PracticeChooseCoin(Page):
     def vars_for_template(self):
         coins = [('fair', 'Fair'), ('biased', 'Biased')]
         random.shuffle(coins)
+        # store the shuffled order
         self.participant.vars['coin_order'] = coins
+        # also record it for data export
         self.player.coin_order = ','.join([coin[0] for coin in coins])
         practice_round_number = self.round_number - C.NUM_INTRO_PAGES
         return {
@@ -93,6 +86,7 @@ class PracticeChooseCoin(Page):
     def is_displayed(self):
         return C.NUM_INTRO_PAGES < self.round_number <= C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
 
+
 class PracticeRevealCoinOutcome(Page):
     template_name = 'coin_flip/PracticeRevealCoinOutcome.html'
 
@@ -106,14 +100,15 @@ class PracticeRevealCoinOutcome(Page):
         }
 
     def is_displayed(self):
-        return C.NUM_INTRO_PAGES < self.round_number <= C.PRACTICE_ROUNDS + C.NUM_INTRO_PAGES
+        return C.NUM_INTRO_PAGES < self.round_number <= C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
+
 
 class PracticeChoosePermutation(Page):
     form_model = 'player'
     template_name = 'coin_flip/PracticeChoosePermutation.html'
 
     def get_form_fields(self):
-        coins = self.participant.vars.get('coin_order', [('fair', 'Fair'), ('biased', 'Biased')])
+        coins = self.participant.vars['coin_order']
         return [f"{coin[0]}_outcome" for coin in coins]
 
     def vars_for_template(self):
@@ -133,9 +128,12 @@ class PracticeChoosePermutation(Page):
         self.player.coin_permutation_choice = ''.join(outcomes)
 
     def is_displayed(self):
-        return C.NUM_INTRO_PAGES < self.round_number <= C.PRACTICE_ROUNDS + C.NUM_INTRO_PAGES
+        return C.NUM_INTRO_PAGES < self.round_number <= C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
 
-# Real Rounds
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Real‐Round Pages
+# ──────────────────────────────────────────────────────────────────────────────
 class RoundInfo(Page):
     template_name = 'coin_flip/RoundInfo.html'
 
@@ -149,6 +147,7 @@ class RoundInfo(Page):
     def is_displayed(self):
         return self.round_number > C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
 
+
 class ChooseCoin(Page):
     form_model = 'player'
     form_fields = ['coin_choice']
@@ -159,7 +158,6 @@ class ChooseCoin(Page):
         random.shuffle(coins)
         self.participant.vars['coin_order'] = coins
         self.player.coin_order = ','.join([coin[0] for coin in coins])
-
         real_round_number = self.round_number - C.NUM_INTRO_PAGES - C.PRACTICE_ROUNDS
         return {
             'coins': coins,
@@ -176,6 +174,7 @@ class ChooseCoin(Page):
     def is_displayed(self):
         return self.round_number > C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
 
+
 class RevealCoinOutcome(Page):
     template_name = 'coin_flip/RevealCoinOutcome.html'
 
@@ -190,6 +189,7 @@ class RevealCoinOutcome(Page):
 
     def is_displayed(self):
         return self.round_number > C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
+
 
 class ChoosePermutation(Page):
     form_model = 'player'
@@ -219,37 +219,40 @@ class ChoosePermutation(Page):
     def is_displayed(self):
         return self.round_number > C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
 
+
 class Results(Page):
     def vars_for_template(self):
-        total_winnings = self.player.total_winnings
-        return {
-            'winnings': total_winnings
-        }
+        return {'winnings': self.player.total_winnings}
 
     def is_displayed(self):
         return self.round_number == C.NUM_ROUNDS
 
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Full sequence
+# ──────────────────────────────────────────────────────────────────────────────
 page_sequence = [
-    # Introduction pages
+    # Intro
     Introduction,
     Introduction1point5,
     Introduction1point6,
     Introduction2,
-    # Comprehension questions
+
+    # Comprehension
     CompQuestion1,
     Feedback1,
-    #CompQuestion2,
-    #Feedback2,
-    #CompQuestion3,
-    #Feedback3,
-    # Practice rounds
+
+    # Practice
     PracticeChooseCoin,
     PracticeRevealCoinOutcome,
     PracticeChoosePermutation,
+
     # Real rounds
     RoundInfo,
     ChooseCoin,
     RevealCoinOutcome,
     ChoosePermutation,
+
+    # Final
     Results,
 ]
