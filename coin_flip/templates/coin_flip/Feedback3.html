@@ -1,25 +1,24 @@
-{% extends 'coin_flip/base.html' %}
+{% extends "global/Page.html" %}
+{% load otree static %}
 
-{% block title %}Feedback3{% endblock %}
-
+{% block title %}Feedback for Comprehension 3{% endblock %}
 {% block content %}
-<script>
-    function displayFeedback() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const answer = urlParams.get('answer');
-        
-        if (answer === 'true') {
-            document.getElementById('feedback').innerHTML = "No, that is unfortunately not correct. This information is always correct, and you do need to enter this information in the next screen.";
-        } else if (answer === 'false') {
-            document.getElementById('feedback').innerHTML = "Correct! This information is always correct, and you do need to enter this information in the next screen.";
-        } else {
-            document.getElementById('feedback').innerHTML = "Please select an answer.";
-        }
-    }
-</script>
-
-<body onload="displayFeedback()">
-    <p id="feedback"></p>
-    {{ next_button }}
-</body>
+<div class="container">
+  <div class="text-center mb-4">
+    {% if player.compq3 == "False" %}
+      <p class="lead">
+        CCorrect! This information is always correct, and you do need to enter this information in the next screen.
+      </p>
+    {% else %}
+      <p class="lead">
+        No, that is unfortunately not correct. This information is always correct, and you do need to enter this information in the next screen.
+      </p>
+    {% endif %}
+  </div>
+  <form method="post">
+    <div class="d-flex justify-content-center">
+      {{ next_button }}
+    </div>
+  </form>
+</div>
 {% endblock %}
