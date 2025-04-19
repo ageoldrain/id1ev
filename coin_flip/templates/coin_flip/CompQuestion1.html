@@ -1,35 +1,31 @@
-{% extends "global/Page.html" %}
-{% load otree static %}
+{% extends "coin_flip/base.html" %}
 
-{% block title %}Comprehension Question 1{% endblock %}
+{% block title %}Comprehension Question 1{% endblock %}
 
 {% block content %}
-<div class="container">
-  <!-- Question text, centered -->
-  <h3 class="text-center mb-4">
-    In each round there are two coins that you have to guess.  
-    To get paid for that round, you have to guess only one of the coins.
-  </h3>
+    <p class="text-center mb-4">
+        In each round there are two coins that you have to guess.
+        To get paid for that round, you have to guess only one of the coins.
+    </p>
 
-  <form method="post">
-    <!-- Toggle buttons for True/False -->
-   <div class="d-flex justify-content-center mb-4">
-     <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <form method="post">
+        <!-- True/False toggle buttons, spaced apart -->
+        <div class="d-flex justify-content-center mb-4">
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-primary me-3">
+                    <input type="radio" name="compq1" value="True" autocomplete="off" required>
+                    True
+                </label>
+                <label class="btn btn-primary">
+                    <input type="radio" name="compq1" value="False" autocomplete="off" required>
+                    False
+                </label>
+            </div>
+        </div>
 
-      <label class="btn btn-primary me-3">  {# add margin‐end #}
-         <input type="radio" name="compq1" value="True" autocomplete="off" required> True
-       </label>
-
-        <label class="btn btn-primary">
-         <input type="radio" name="compq1" value="False" autocomplete="off" required> False
-       </label>
-     </div>
-   </div>
-
-    <!-- Centered Next button -->
-    <div class="d-flex justify-content-center">
-      {{ next_button }}
-    </div>
-  </form>
-</div>
+        <!-- Centered Next button -->
+        <div class="d-flex justify-content-center">
+            {{ next_button }}
+        </div>
+    </form>
 {% endblock %}
