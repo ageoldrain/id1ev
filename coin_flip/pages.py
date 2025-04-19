@@ -33,8 +33,8 @@ class CompQuestion1(Page):
     form_fields = ['compq1']
 
     def is_displayed(self):
-        # only in the one round immediately after the 4 intro pages
         return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
+
 
 class CompQuestion2(Page):
 
@@ -53,12 +53,12 @@ class CompQuestion3(Page):
 
 # Add these classes for each feedback page
 
- class Feedback1(Page):
-     template_name = 'coin_flip/Feedback1.html'
 
-     def is_displayed(self):
-         # only show this feedback once, in the first post‑intro round
-         return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
+class Feedback1(Page):
+    template_name = 'coin_flip/Feedback1.html'
+
+    def is_displayed(self):
+        return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
          
 class Feedback2(Page):
     template_name = 'coin_flip/Feedback2.html'
