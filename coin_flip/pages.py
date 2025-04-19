@@ -3,13 +3,12 @@ import random
 
 from .models import C, Player
 
-# probabilities for practice/real flips
 P_FAIR = 0.5
 P_BIASED = 0.95
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Introduction Pages
+# Introduction
 # ──────────────────────────────────────────────────────────────────────────────
 class Introduction(Page):
     def is_displayed(self):
@@ -37,14 +36,13 @@ class Introduction2(Page):
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Comprehension Question (only once)
+# Comprehension Q1 + Feedback
 # ──────────────────────────────────────────────────────────────────────────────
 class CompQuestion1(Page):
     form_model = 'player'
     form_fields = ['compq1']
 
     def is_displayed(self):
-        # exactly once, immediately after the last intro page
         return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
 
 
@@ -53,6 +51,24 @@ class Feedback1(Page):
 
     def is_displayed(self):
         return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
+
+
+# ──────────────────────────────────────────────────────────────────────────────
+# Comprehension Q2 + Feedback
+# ──────────────────────────────────────────────────────────────────────────────
+class CompQuestion2(Page):
+    form_model = 'player'
+    form_fields = ['compq2']
+
+    def is_displayed(self):
+        return self.subsession.round_number == C.NUM_INTRO_PAGES + 2
+
+
+class Feedback2(Page):
+    template_name = 'coin_flip/Feedback2.html'
+
+    def is_displayed(self):
+        return self.subsession.round_number == C.NUM_INTRO_PAGES + 2
 
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -66,9 +82,7 @@ class PracticeChooseCoin(Page):
     def vars_for_template(self):
         coins = [('fair', 'Fair'), ('biased', 'Biased')]
         random.shuffle(coins)
-        # store the shuffled order
         self.participant.vars['coin_order'] = coins
-        # also record it for data export
         self.player.coin_order = ','.join([coin[0] for coin in coins])
         practice_round_number = self.round_number - C.NUM_INTRO_PAGES
         return {
@@ -132,7 +146,7 @@ class PracticeChoosePermutation(Page):
 
 
 # ──────────────────────────────────────────────────────────────────────────────
-# Real‐Round Pages
+# Real Rounds
 # ──────────────────────────────────────────────────────────────────────────────
 class RoundInfo(Page):
     template_name = 'coin_flip/RoundInfo.html'
@@ -228,31 +242,26 @@ class Results(Page):
         return self.round_number == C.NUM_ROUNDS
 
 
-# ──────────────────────────────────────────────────────────────────────────────
-# Full sequence
-# ──────────────────────────────────────────────────────────────────────────────
 page_sequence = [
-    # Intro
     Introduction,
     Introduction1point5,
     Introduction1point6,
     Introduction2,
 
-    # Comprehension
     CompQuestion1,
     Feedback1,
 
-    # Practice
+    CompQuestion2,
+    Feedback2,
+
     PracticeChooseCoin,
     PracticeRevealCoinOutcome,
     PracticeChoosePermutation,
 
-    # Real rounds
     RoundInfo,
     ChooseCoin,
     RevealCoinOutcome,
     ChoosePermutation,
 
-    # Final
     Results,
 ]
