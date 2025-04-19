@@ -237,7 +237,7 @@ page_sequence = [
     Introduction2,
     # Comprehension questions
     CompQuestion1,
-    #Feedback1,
+    Feedback1,
     #CompQuestion2,
     #Feedback2,
     #CompQuestion3,
