@@ -1,31 +1,32 @@
-{% extends "coin_flip/base.html" %}
+{% extends "global/Page.html" %}
+{% load otree static %}
 
 {% block title %}Comprehension Question 1{% endblock %}
 
 {% block content %}
-    <p class="text-center mb-4">
-        In each round there are two coins that you have to guess.
-        To get paid for that round, you have to guess only one of the coins.
-    </p>
+<div class="container">
+  <!-- Centered question text -->
+  <h3 class="text-center mb-4">
+    In each round there are two coins that you have to guess.  
+    To get paid for that round, you have to guess only one of the coins.
+  </h3>
 
-    <form method="post">
-        <!-- True/False toggle buttons, spaced apart -->
-        <div class="d-flex justify-content-center mb-4">
-            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-primary me-3">
-                    <input type="radio" name="compq1" value="True" autocomplete="off" required>
-                    True
-                </label>
-                <label class="btn btn-primary">
-                    <input type="radio" name="compq1" value="False" autocomplete="off" required>
-                    False
-                </label>
-            </div>
-        </div>
+  <!-- Form to submit True/False -->
+  <form method="post">
+    <div class="d-flex justify-content-center mb-4">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-primary me-3">
+          <input type="radio" name="compq1" value="True" autocomplete="off" required> True
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" name="compq1" value="False" autocomplete="off" required> False
+        </label>
+      </div>
+    </div>
 
-        <!-- Centered Next button -->
-        <div class="d-flex justify-content-center">
-            {{ next_button }}
-        </div>
-    </form>
+    <div class="d-flex justify-content-center">
+      {{ next_button }}
+    </div>
+  </form>
+</div>
 {% endblock %}
