@@ -66,6 +66,7 @@ class CompQuestion2(Page):
 
 class Feedback2(Page):
     template_name = 'coin_flip/Feedback2.html'
+    form_fields = []                 # explicitly no fields
 
     def is_displayed(self):
         return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
