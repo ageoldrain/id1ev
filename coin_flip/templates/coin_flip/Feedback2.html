@@ -2,24 +2,26 @@
 {% extends "global/Page.html" %}
 {% load otree static %}
 
-{% block title %}Feedback for Comprehension Question 2{% endblock %}
+{% block title %}Feedback for Comprehension Question 2{% endblock %}
+
 {% block content %}
 <div class="container">
-  <div class="text-center mb-4">
-    {% if player.compq2 == "True" %}
-      <p class="lead">
-        Unfortunately that's not correct. The biased coin is always biased heads. 
-      </p>
-    {% else %}
-      <p class="lead">
-        Correct! The biased coin is always biased heads. 
-      </p>
-    {% endif %}
-  </div>
-  <form method="post">
-    <div class="d-flex justify-content-center">
-      {{ next_button }}
+    <div class="text-center mb-4">
+        {% if player.compq2 == "True" %}
+            <p class="lead">
+                Unfortunately that’s not correct. The biased coin is always biased heads.
+            </p>
+        {% else %}
+            <p class="lead">
+                Correct! The biased coin is always biased heads.
+            </p>
+        {% endif %}
     </div>
-  </form>
+
+    <form method="post">
+        <div class="d-flex justify-content-center">
+            {{ next_button }}
+        </div>
+    </form>
 </div>
 {% endblock %}
