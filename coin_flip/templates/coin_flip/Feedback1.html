@@ -1,17 +1,23 @@
 {% extends "coin_flip/base.html" %}
 
-{% block title %}Feedback 1{% endblock %}
+{% block title %}Feedback{% endblock %}
 
 {% block content %}
-  {% if player.compq1 == "True" %}
-    <p>
-      Correct! You need to guess <b>both</b> coins to be reimbursed for any round.
-    </p>
-  {% else %}
-    <p>
-      No, that is unfortunately not correct. You need to guess <b>both</b> coins to be reimbursed for any round.
-    </p>
-  {% endif %}
+<div class="container">
+    <div class="text-center mb-4">
+        {% if player.compq1 == "True" %}
+            <p class="lead">
+                Correct! You only need to guess one of the two coins each round to earn your payment.
+            </p>
+        {% else %}
+            <p class="lead">
+                That’s not quite right. Remember, you only get paid for whichever single coin you guess each round.
+            </p>
+        {% endif %}
+    </div>
 
-  {{ next_button }}
+    <div class="d-flex justify-content-center">
+        {{ next_button }}
+    </div>
+</div>
 {% endblock %}
