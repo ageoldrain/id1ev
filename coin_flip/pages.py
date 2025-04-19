@@ -48,7 +48,7 @@ class CompQuestion1(Page):
 
 class Feedback1(Page):
     form_model = 'player'
-    form_fields = []  # no fields here
+    form_fields = []
     template_name = 'coin_flip/Feedback1.html'
 
     def is_displayed(self):
@@ -68,7 +68,7 @@ class CompQuestion2(Page):
 
 class Feedback2(Page):
     form_model = 'player'
-    form_fields = []  # no fields here
+    form_fields = []
     template_name = 'coin_flip/Feedback2.html'
 
     def is_displayed(self):
