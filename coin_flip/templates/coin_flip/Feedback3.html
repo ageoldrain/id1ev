@@ -9,9 +9,9 @@
         const answer = urlParams.get('answer');
         
         if (answer === 'true') {
-            document.getElementById('feedback').innerHTML = "No, that is unfortunately not correct. You do need to enter this information in the next screen.";
+            document.getElementById('feedback').innerHTML = "No, that is unfortunately not correct. This information is always correct, and you do need to enter this information in the next screen.";
         } else if (answer === 'false') {
-            document.getElementById('feedback').innerHTML = "Correct! You do need to enter this information in the next screen.";
+            document.getElementById('feedback').innerHTML = "Correct! This information is always correct, and you do need to enter this information in the next screen.";
         } else {
             document.getElementById('feedback').innerHTML = "Please select an answer.";
         }
