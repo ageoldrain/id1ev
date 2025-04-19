@@ -1,25 +1,26 @@
-{% extends 'coin_flip/base.html' %}
+{% extends "global/Page.html" %}
+{% load otree static %}
 
-{% block title %}Feedback2{% endblock %}
+{% block title %}Feedback{% endblock %}
 
 {% block content %}
-<script>
-    function displayFeedback() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const answer = urlParams.get('answer');
-        
-        if (answer === 'true') {
-            document.getElementById('feedback').innerHTML = "No, that is unfortunately not correct. The biased coin is equally likely to be biased heads or tails.";
-        } else if (answer === 'false') {
-            document.getElementById('feedback').innerHTML = "Correct! The biased coin is equally likely to be biased heads or tails.";
-        } else {
-            document.getElementById('feedback').innerHTML = "Please select an answer.";
-        }
-    }
-</script>
+<div class="container">
+  <div class="text-center mb-4">
+    {% if player.compq2 == "True" %}
+      <p class="lead">
+        Unfortunately that's not correct. The biased coin is always biased heads. 
+      </p>
+    {% else %}
+      <p class="lead">
+        Correct! The biased coin is always biased heads. 
+      </p>
+    {% endif %}
+  </div>
 
-<body onload="displayFeedback()">
-    <p id="feedback"></p>
-    {{ next_button }}
-</body>
+  <form method="post">
+    <div class="d-flex justify-content-center">
+      {{ next_button }}
+    </div>
+  </form>
+</div>
 {% endblock %}
