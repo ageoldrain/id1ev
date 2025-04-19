@@ -40,6 +40,11 @@ class Player(BasePlayer):
     choices=['True', 'False'],
     label='Your answer to question 2'
     )
+    compq3 = models.StringField(
+    choices=['True', 'False'],
+    label='Your answer to question 3'
+    )
+
 
 
     # Player's guesses for the outcome of each coin
