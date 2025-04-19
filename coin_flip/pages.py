@@ -61,14 +61,14 @@ class CompQuestion2(Page):
     form_fields = ['compq2']
 
     def is_displayed(self):
-        return self.subsession.round_number == C.NUM_INTRO_PAGES + 2
+        return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
 
 
 class Feedback2(Page):
     template_name = 'coin_flip/Feedback2.html'
 
     def is_displayed(self):
-        return self.subsession.round_number == C.NUM_INTRO_PAGES + 2
+        return self.subsession.round_number == C.NUM_INTRO_PAGES + 1
 
 
 # ──────────────────────────────────────────────────────────────────────────────
