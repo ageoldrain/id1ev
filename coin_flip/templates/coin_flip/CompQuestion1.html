@@ -13,16 +13,18 @@
 
   <form method="post">
     <!-- Toggle buttons for True/False -->
-    <div class="d-flex justify-content-center mb-4">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+   <div class="d-flex justify-content-center mb-4">
+     <div class="btn-group btn-group-toggle" data-toggle="buttons">
+
+      <label class="btn btn-primary me-3">  {# add margin‐end #}
+         <input type="radio" name="compq1" value="True" autocomplete="off" required> True
+       </label>
+
         <label class="btn btn-primary">
-          <input type="radio" name="compq1" value="True" autocomplete="off" required> True
-        </label>
-        <label class="btn btn-primary">
-          <input type="radio" name="compq1" value="False" autocomplete="off" required> False
-        </label>
-      </div>
-    </div>
+         <input type="radio" name="compq1" value="False" autocomplete="off" required> False
+       </label>
+     </div>
+   </div>
 
     <!-- Centered Next button -->
     <div class="d-flex justify-content-center">
