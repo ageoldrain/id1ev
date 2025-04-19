@@ -1,23 +1,26 @@
-{% extends "coin_flip/base.html" %}
+{% extends "global/Page.html" %}
+{% load otree static %}
 
 {% block title %}Feedback{% endblock %}
 
 {% block content %}
 <div class="container">
-    <div class="text-center mb-4">
-        {% if player.compq1 == "True" %}
-            <p class="lead">
-                Correct! You only need to guess one of the two coins each round to earn your payment.
-            </p>
-        {% else %}
-            <p class="lead">
-                That’s not quite right. Remember, you only get paid for whichever single coin you guess each round.
-            </p>
-        {% endif %}
-    </div>
+  <div class="text-center mb-4">
+    {% if player.compq1 == "True" %}
+      <p class="lead">
+        Correct! You only get paid for whichever single coin you guess.
+      </p>
+    {% else %}
+      <p class="lead">
+        That’s not quite right. Remember, you only get paid for whichever single coin you guess.
+      </p>
+    {% endif %}
+  </div>
 
+  <form method="post">
     <div class="d-flex justify-content-center">
-        {{ next_button }}
+      {{ next_button }}
     </div>
+  </form>
 </div>
 {% endblock %}
