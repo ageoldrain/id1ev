@@ -45,6 +45,19 @@ class Player(BasePlayer):
     label='Your answer to question 3'
     )
 
+    how_decisions = models.LongStringField(
+        label='How did you make your decisions?',
+        blank=False,
+        max_length=1000,
+    )
+
+    experiment_purpose = models.LongStringField(
+        label='What do you think the experiment was about?',
+        blank=False,
+        max_length=1000,
+    )    
+    
+
 
 
     # Player's guesses for the outcome of each coin
