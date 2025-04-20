@@ -1,0 +1,30 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}We would like to ask you two questions about this study{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h3 class="text-center my-4">
+    We would like to ask you two questions about this study.
+  </h3>
+  <form method="post">
+    <div class="mb-4">
+      <label for="id_how_decisions" class="form-label h5">
+        First, how did you make your decisions?
+      </label>
+      <textarea
+        class="form-control"
+        id="id_how_decisions"
+        name="how_decisions"
+        rows="5"
+        required
+        maxlength="1000"
+      ></textarea>
+    </div>
+    <div class="d-flex justify-content-center">
+      {{ next_button }}
+    </div>
+  </form>
+</div>
+{% endblock %}
