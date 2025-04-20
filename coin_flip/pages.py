@@ -270,6 +270,10 @@ class PostQuestion2(Page):
     form_model = 'player'
     form_fields = ['experiment_purpose']
     template_name = 'coin_flip/PostQuestion2.html'
+    
+    def is_displayed(self):
+        return self.round_number == C.NUM_ROUNDS
+
 
 class Results(Page):
     def vars_for_template(self):
