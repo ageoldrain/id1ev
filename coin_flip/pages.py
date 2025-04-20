@@ -257,6 +257,19 @@ class ChoosePermutation(Page):
     def is_displayed(self):
         return self.round_number > C.NUM_INTRO_PAGES + C.PRACTICE_ROUNDS
 
+class PostQuestion1(Page):
+    form_model = 'player'
+    form_fields = ['how_decisions']
+    template_name = 'coin_flip/PostQuestion1.html'
+
+    def is_displayed(self):
+        return self.round_number == C.NUM_ROUNDS
+
+
+class PostQuestion2(Page):
+    form_model = 'player'
+    form_fields = ['experiment_purpose']
+    template_name = 'coin_flip/PostQuestion2.html'
 
 class Results(Page):
     def vars_for_template(self):
@@ -290,7 +303,10 @@ page_sequence = [
     ChooseCoin,
     RevealCoinOutcome,
     ChoosePermutation,
-
+    # Debrief questions
+    PostQuestion1,
+    PostQuestion2,
+    
     # Final
     Results,
 ]
