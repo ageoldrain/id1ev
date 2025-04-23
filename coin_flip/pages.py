@@ -26,6 +26,8 @@ class Introduction1point6(Page):
 
 
 class Introduction2(Page):
+    form_model  = 'player'
+    form_fields = ['signature']
     template_name = 'coin_flip/Instructions2.html'
 
     def is_displayed(self):
@@ -33,6 +35,10 @@ class Introduction2(Page):
 
     def before_next_page(self):
         self.participant.vars['intro_completed'] = True
+
+
+
+
 
 
 # ──────────────────────────────────────────────────────────────────────────────
