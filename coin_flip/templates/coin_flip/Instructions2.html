@@ -70,9 +70,22 @@
         <p>
             I am the age of 18 years, or greater, and I agree to what is specified in this electronic consent form. I understand that
             my participation in this study is entirely voluntary, and that I am not waiving any of my rights as I consent to participate.
-            I also understand that I have the right to withdrawal from participating in this research study at any time. By clicking
-            "Next", I agree to be a participant in this study. If I do not agree to be a participant in this study I will exit this page.
+            I also understand that I have the right to withdrawal from participating in this research study at any time. 
+            
+            
+            By typing my name in place of my signature, I am agreeing to be a participant in this study. If I do not agree to be a participant in this study I will exit this page.
         </p>
+        <form method="post">
+  {{ formfields }}
+  <label for="id_signature">Please sign (type your full name):</label>
+  <input
+    type="text"
+    id="id_signature"
+    name="signature"
+    required
+    maxlength="200"
+    class="form-control"
+  >
         <form method="post">
             <button type="submit" class="btn btn-primary">Next</button>
         </form>
