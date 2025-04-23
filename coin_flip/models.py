@@ -30,6 +30,12 @@ class Player(BasePlayer):
     chosen_coin = models.StringField()
     fair_coin_value = models.CurrencyField()
     biased_coin_value = models.CurrencyField()
+    
+    signature = models.StringField(
+        label="Please sign (type your full name here)",
+        blank=False,
+        max_length=200,
+    )
 
     # in coin_flip/models.py, inside class Player(BasePlayer):
     compq1 = models.StringField(
