@@ -53,13 +53,10 @@ USE_POINTS = False
 # ──────────────────────────────────────────────────────────────────────────────
 ROOMS = [
     dict(
-        name='infodemand',
-        display_name='Experiment on Curiosity and Demand for Information',
-        participant_label_file=os.path.join(BASE_DIR, '_rooms', 'infodemand.txt'),
-    ),
-    dict(
-        name='live_demo',
-        display_name='Room for live demo (no participant labels)',
+        name='prolific',
+        display_name='Prolific Pilot Participant Room',
+        # optional: if you want to pre-assign labels, point to a .txt here:
+        # participant_label_file=os.path.join(BASE_DIR, '_rooms', 'prolific_labels.txt'),
     ),
 ]
 
